@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StoreContext, StoreProvider } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
@@ -15,10 +15,6 @@ const BoxGrid = () => {
     // dispatch({ type: types.ADD_TO_TECH_LIST, payload: newTech });
   };
 
-  const resetGame = () => {
-    dispatch({ type: types.RESET_GAME });
-  };
-
   return (
     <div className="box-container">
       <div className="game-box">
@@ -28,7 +24,13 @@ const BoxGrid = () => {
               className="row-item row-itemL"
               onClick={() => handleBoxClick(0)}
             >
-              {state.gameBoard[0]}
+              {state.gameBoard[0] === "player1" && (
+                <i className="fas fa-times" />
+              )}
+              {state.gameBoard[0] === "player2" && (
+                <i className="fas fa-times" />
+              )}
+              <i className="far fa-dot-circle" />
             </div>
             <div className="row-item" onClick={() => handleBoxClick(1)}>
               {state.gameBoard[1]}
@@ -115,7 +117,6 @@ const BoxGrid = () => {
             </div>
           </div>
         </div>
-        <button onClick={resetGame}>Reset</button>
       </div>
     </div>
   );
