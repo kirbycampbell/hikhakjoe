@@ -26,9 +26,29 @@
 }
 
 .game-box {
-  display: flex;
+  display: grid;
   height: 80%;
   width: 80%;
+  grid-template-rows: 25% 25% 25% 25%;
+  /* align-items: center;
+  justify-content: center; */
+}
+.row-container {
+  width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.row-item {
 }
