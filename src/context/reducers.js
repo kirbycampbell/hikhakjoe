@@ -1,28 +1,26 @@
 const initialState = {
-  techList: ["TypeScript", "React Hooks"]
+  gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 };
 const types = {
-  SET_TECH_LIST: "SET_TECH_LIST",
-  ADD_TO_TECH_LIST: "ADD_TO_TECH_LIST",
-  REMOVE_FROM_TECH_LIST: "REMOVE_FROM_TECH_LIST"
+  MAKE_MOVE_A: "MAKE_MOVE_A",
+  RESET_GAME: "RESET_GAME",
+  MAKE_MOVE_B: "MAKE_MOVE_B"
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.SET_TECH_LIST:
+    case types.MAKE_MOVE_A:
+      console.log(action);
       return {
-        ...state,
-        techList: action.payload
+        ...state
+        //gameBoard: action.payload
       };
-    case types.ADD_TO_TECH_LIST:
-      return {
-        ...state,
-        techList: [...state.techList, action.payload]
-      };
-    case types.REMOVE_FROM_TECH_LIST:
-      return {
-        ...state,
-        techList: state.techList.filter(tech => tech !== action.payload)
-      };
+
+    // case types.ADD_TO_TECH_LIST:
+    //   return {
+    //     ...state,
+    //     techList: [...state.techList, action.payload]
+    //   };
+
     default:
       throw new Error("Unexpected action");
   }
