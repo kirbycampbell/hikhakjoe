@@ -1,5 +1,6 @@
 const initialState = {
-  gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+  gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+  player: 1
 };
 const types = {
   MAKE_MOVE_A: "MAKE_MOVE_A",
@@ -14,9 +15,12 @@ const reducer = (state = initialState, action) => {
       newState[action.payload.position] = action.payload.move;
       return {
         gameBoard: newState
-        //gameBoard: action.payload
       };
-
+    case types.RESET_GAME:
+      console.log(action);
+      return {
+        gameBoard: initialState
+      };
     // case types.ADD_TO_TECH_LIST:
     //   return {
     //     ...state,

@@ -5,6 +5,7 @@ import { types } from "../context/reducers";
 
 const BoxGrid = () => {
   const { state, dispatch, actions } = useContext(StoreContext);
+
   const handleBoxClick = i => {
     console.log(i);
     dispatch({
@@ -12,6 +13,10 @@ const BoxGrid = () => {
       payload: { move: "player1", position: i }
     });
     // dispatch({ type: types.ADD_TO_TECH_LIST, payload: newTech });
+  };
+
+  const resetGame = () => {
+    dispatch({ type: types.RESET_GAME });
   };
 
   return (
@@ -110,6 +115,7 @@ const BoxGrid = () => {
             </div>
           </div>
         </div>
+        <button onClick={resetGame}>Reset</button>
       </div>
     </div>
   );
