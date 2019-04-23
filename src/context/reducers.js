@@ -10,8 +10,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.MAKE_MOVE_A:
       console.log(action);
+      const newState = state.gameBoard;
+      newState[action.payload.position] = action.payload.move;
       return {
-        ...state
+        gameBoard: newState
         //gameBoard: action.payload
       };
 

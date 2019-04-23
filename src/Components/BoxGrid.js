@@ -1,11 +1,17 @@
 import React, { useState, useContext } from "react";
 import { StoreContext, StoreProvider } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
+import { types } from "../context/reducers";
 
 const BoxGrid = () => {
   const { state, dispatch, actions } = useContext(StoreContext);
   const handleBoxClick = i => {
     console.log(i);
+    dispatch({
+      type: types.MAKE_MOVE_A,
+      payload: { move: "player1", position: i }
+    });
+    // dispatch({ type: types.ADD_TO_TECH_LIST, payload: newTech });
   };
 
   return (
