@@ -1,0 +1,48 @@
+.box-container {
+  display: flex;
+  height: 80%;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 111, 202, 0.5);
+  margin: auto;
+  border-radius: 30px;
+}
+
+.game-box {
+  display: grid;
+  height: 80%;
+  width: 80%;
+  grid-template-rows: 25% 25% 25% 25%;
+  /* align-items: center;
+    justify-content: center; */
+}
+.row-container {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.row-item {
+  height: 100%;
+  border: 1px solid black;
+  border-top: none;
+  border-right: none;
+}
+
+.row-itemL {
+  border-left: none;
+}
+.row-itemB {
+  border-bottom: none;
+}
