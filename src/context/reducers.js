@@ -6,8 +6,10 @@ const initialState = {
 const types = {
   MAKE_MOVE_A: "MAKE_MOVE_A",
   RESET_GAME: "RESET_GAME",
-  MAKE_MOVE_B: "MAKE_MOVE_B"
+  MAKE_MOVE_B: "MAKE_MOVE_B",
+  WINNER: "WINNER"
 };
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.MAKE_MOVE_A:
@@ -17,6 +19,10 @@ const reducer = (state = initialState, action) => {
         gameBoard: newState
       };
     case types.RESET_GAME:
+      return {
+        gameBoard: Array(16).fill("")
+      };
+    case types.WINNER:
       return {
         gameBoard: Array(16).fill("")
       };

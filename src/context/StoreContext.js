@@ -1,13 +1,13 @@
 import React, { useEffect, createContext, useReducer } from "react";
 import { initialState, types, reducer } from "./reducers";
-import { useActions } from "./action";
+import { checkForWin } from "./actions";
 
 const StoreContext = createContext(initialState);
 const StoreProvider = ({ children }) => {
   // Get state and dispatch from Reacts new API useReducer.
   const [state, dispatch] = useReducer(reducer, initialState);
   // Get actions from useActions and pass it to Context
-  const actions = useActions(state, dispatch);
+  const actions = checkForWin(state, dispatch);
   // Log new state
   useEffect(() => console.log({ newState: state }), [state]);
   // Render state, dispatch and special case actions
