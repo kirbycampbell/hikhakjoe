@@ -13,6 +13,7 @@ function App() {
   return (
     <div className="App">
       <div className="title">Hik Hak Joe</div>
+      <div>{state.p1Points}</div>
       <BoxGrid />
       <button onClick={resetGame}>Reset</button>
     </div>

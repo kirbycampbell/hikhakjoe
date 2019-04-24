@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { StoreContext, StoreProvider } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
-import { useActions } from "../context/actions";
 
 const winningCombos = [
   [0, 1, 2],
@@ -33,8 +32,13 @@ const winningCombos = [
 
 const BoxGrid = () => {
   const { state, dispatch, actions } = useContext(StoreContext);
+  const [board, setBoard] = useState([]);
   const [turn, setTurn] = useState(1);
   const [winner, setWinner] = useState("noone");
+  useEffect(() => {
+    console.log(state);
+    setBoard(state.gameBoard);
+  }, [state]);
   let player;
 
   const checkForWin = () => {
@@ -44,14 +48,15 @@ const BoxGrid = () => {
         state.gameBoard[combo[1]] === state.gameBoard[combo[2]] &&
         state.gameBoard[combo[0]] != ""
       ) {
-        setWinner("We've Got A Winner");
+        //setWinner("We've Got A Winner");
         dispatch({
-          type: types.WINNER
+          type: types.POINTS,
+          payload: { amount: 50 }
         });
       }
     });
   };
-
+  // The rendering of the icon state.gameBoard[0] is causing errors currently
   const handleBoxClick = i => {
     console.log(i);
     if (state.gameBoard[i] === "") {
@@ -82,34 +87,26 @@ const BoxGrid = () => {
                 className="row-item row-itemL"
                 onClick={() => handleBoxClick(0)}
               >
-                {state.gameBoard[0] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[0] === "o" && (
+                {board[0] === "x" && <i className="fas fa-times game-piece" />}
+                {board[0] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(1)}>
-                {state.gameBoard[1] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[1] === "o" && (
+                {board[1] === "x" && <i className="fas fa-times game-piece" />}
+                {board[1] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(2)}>
-                {state.gameBoard[2] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[2] === "o" && (
+                {board[2] === "x" && <i className="fas fa-times game-piece" />}
+                {board[2] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(3)}>
-                {state.gameBoard[3] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[3] === "o" && (
+                {board[3] === "x" && <i className="fas fa-times game-piece" />}
+                {board[3] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -121,34 +118,26 @@ const BoxGrid = () => {
                 className="row-item row-itemL"
                 onClick={() => handleBoxClick(4)}
               >
-                {state.gameBoard[4] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[4] === "o" && (
+                {board[4] === "x" && <i className="fas fa-times game-piece" />}
+                {board[4] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(5)}>
-                {state.gameBoard[5] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[5] === "o" && (
+                {board[5] === "x" && <i className="fas fa-times game-piece" />}
+                {board[5] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(6)}>
-                {state.gameBoard[6] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[6] === "o" && (
+                {board[6] === "x" && <i className="fas fa-times game-piece" />}
+                {board[6] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(7)}>
-                {state.gameBoard[7] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[7] === "o" && (
+                {board[7] === "x" && <i className="fas fa-times game-piece" />}
+                {board[7] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -160,34 +149,26 @@ const BoxGrid = () => {
                 className="row-item row-itemL"
                 onClick={() => handleBoxClick(8)}
               >
-                {state.gameBoard[8] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[8] === "o" && (
+                {board[8] === "x" && <i className="fas fa-times game-piece" />}
+                {board[8] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(9)}>
-                {state.gameBoard[9] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[9] === "o" && (
+                {board[9] === "x" && <i className="fas fa-times game-piece" />}
+                {board[9] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(10)}>
-                {state.gameBoard[10] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[10] === "o" && (
+                {board[10] === "x" && <i className="fas fa-times game-piece" />}
+                {board[10] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
               <div className="row-item" onClick={() => handleBoxClick(11)}>
-                {state.gameBoard[11] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[11] === "o" && (
+                {board[11] === "x" && <i className="fas fa-times game-piece" />}
+                {board[11] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -199,10 +180,8 @@ const BoxGrid = () => {
                 className="row-item row-itemL row-itemB"
                 onClick={() => handleBoxClick(12)}
               >
-                {state.gameBoard[12] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[12] === "o" && (
+                {board[12] === "x" && <i className="fas fa-times game-piece" />}
+                {board[12] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -210,10 +189,8 @@ const BoxGrid = () => {
                 className="row-item row-itemB"
                 onClick={() => handleBoxClick(13)}
               >
-                {state.gameBoard[13] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[13] === "o" && (
+                {board[13] === "x" && <i className="fas fa-times game-piece" />}
+                {board[13] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -221,10 +198,8 @@ const BoxGrid = () => {
                 className="row-item row-itemB"
                 onClick={() => handleBoxClick(14)}
               >
-                {state.gameBoard[14] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[14] === "o" && (
+                {board[14] === "x" && <i className="fas fa-times game-piece" />}
+                {board[14] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -232,10 +207,8 @@ const BoxGrid = () => {
                 className="row-item row-itemB"
                 onClick={() => handleBoxClick(15)}
               >
-                {state.gameBoard[15] === "x" && (
-                  <i className="fas fa-times game-piece" />
-                )}
-                {state.gameBoard[15] === "o" && (
+                {board[15] === "x" && <i className="fas fa-times game-piece" />}
+                {board[15] === "o" && (
                   <i className="far fa-dot-circle game-piece" />
                 )}
               </div>
@@ -243,7 +216,7 @@ const BoxGrid = () => {
           </div>
         </div>
       )}{" "}
-      {winner != "noone" && <div>We've Got A Winner!</div>}
+      {/* {winner != "noone" && <div>We've Got A Winner!</div>} */}
     </div>
   );
 };

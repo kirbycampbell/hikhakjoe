@@ -27,17 +27,4 @@ const winningCombos = [
   [7, 10, 13]
 ];
 
-export const checkForWin = (state, dispatch) => {
-  winningCombos.filter(combo => {
-    if (
-      state.gameBoard[combo[0]] === state.gameBoard[combo[1]] &&
-      state.gameBoard[combo[1]] === state.gameBoard[combo[2]] &&
-      state.gameBoard[combo[0]] != ""
-    ) {
-      //setWinner("We've Got A Winner");
-      dispatch({
-        type: types.WINNER
-      });
-    }
-  });
-};
+export const useActions = (state, dispatch) => {};
