@@ -13,7 +13,9 @@ function App() {
   return (
     <div className="App">
       <div className="title">Hik Hak Joe</div>
-      <div>{state.p1Points}</div>
+      <div>
+        P1 Points: {state.p1Points} ---- P2 Points: {state.p2Points}
+      </div>
       <BoxGrid />
       <button onClick={resetGame}>Reset</button>
     </div>

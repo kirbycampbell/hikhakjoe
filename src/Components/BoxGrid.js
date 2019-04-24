@@ -36,29 +36,41 @@ const BoxGrid = () => {
   const [turn, setTurn] = useState(1);
   const [winner, setWinner] = useState("noone");
   useEffect(() => {
-    console.log(state);
+    //console.log(state);
     setBoard(state.gameBoard);
   }, [state]);
   let player;
+  let xWins = 0.0;
+  let oWins = 0.0;
 
   const checkForWin = () => {
-    winningCombos.filter(combo => {
+    let allWins = [xWins, oWins];
+    const result = winningCombos.filter(combo => {
       if (
         state.gameBoard[combo[0]] === state.gameBoard[combo[1]] &&
         state.gameBoard[combo[1]] === state.gameBoard[combo[2]] &&
         state.gameBoard[combo[0]] != ""
       ) {
         //setWinner("We've Got A Winner");
-        dispatch({
-          type: types.POINTS,
-          payload: { amount: 50 }
-        });
+        if (state.gameBoard[combo[0]] === "x") {
+          xWins++;
+        }
+        if (state.gameBoard[combo[0]] === "o") {
+          oWins++;
+        }
+
+        allWins = [xWins, oWins];
       }
+    });
+    console.log(allWins);
+    dispatch({
+      type: types.POINTS,
+      payload: { amount: allWins }
     });
   };
   // The rendering of the icon state.gameBoard[0] is causing errors currently
   const handleBoxClick = i => {
-    console.log(i);
+    //console.log(i);
     if (state.gameBoard[i] === "") {
       setTurn(turn + 1);
 

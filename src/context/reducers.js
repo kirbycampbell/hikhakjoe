@@ -26,10 +26,11 @@ const reducer = (state = initialState, action) => {
         gameBoard: Array(16).fill("")
       };
     case types.POINTS:
-      const newPoints = state.p1Points + action.payload.amount;
-
+      const p1 = action.payload.amount[0] * 36;
+      const p2 = action.payload.amount[1] * 36;
       return Object.assign({}, state, {
-        p1Points: newPoints
+        p1Points: p1,
+        p2Points: p2
       });
     // case types.GAME_OVER:
     //   return {
