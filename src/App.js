@@ -14,9 +14,15 @@ function App() {
     <div className="App">
       <div className="title">Hik Hak Joe</div>
       <div>
+        Game Points: <br />
         P1 Points: {state.p1Points} ---- P2 Points: {state.p2Points}
       </div>
       <BoxGrid />
+      <div>
+        Overall Points: <br />
+        P1 Overall Points: {state.p1AllPoints} ------ P2 Overall Points:
+        {state.p2AllPoints}
+      </div>
       <button onClick={resetGame}>Reset</button>
     </div>
   );

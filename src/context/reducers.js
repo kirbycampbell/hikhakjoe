@@ -3,7 +3,9 @@ const initialState = {
   player: 1,
   p1Points: 0,
   p2Points: 0,
-  winner: false
+  winner: false,
+  p1AllPoints: 0,
+  p2AllPoints: 0
 };
 
 const types = {
@@ -23,10 +25,12 @@ const reducer = (state = initialState, action) => {
         gameBoard: newBoard
       });
     case types.RESET_GAME:
-      return {
+      return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
-        winner: false
-      };
+        winner: false,
+        p1Points: 0,
+        p2Points: 0
+      });
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;
       const p2 = action.payload.amount[1] * 36;
@@ -35,9 +39,13 @@ const reducer = (state = initialState, action) => {
         p2Points: p2
       });
     case types.GAME_OVER:
+      const endP1Points = state.p1AllPoints;
+      const endP2Points = state.p2AllPoints;
+      console.log("GAME OVER CALLED");
       return Object.assign({}, state, {
-        gameBoard: Array(16).fill(""),
-        winner: true
+        winner: true,
+        p1AllPoints: state.p1Points + endP1Points,
+        p2AllPoints: state.p2Points + endP2Points
       });
 
     default:

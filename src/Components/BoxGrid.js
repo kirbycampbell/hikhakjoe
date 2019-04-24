@@ -35,17 +35,19 @@ const BoxGrid = () => {
   const { state, dispatch } = useContext(StoreContext);
   const [board, setBoard] = useState([]);
   const [turn, setTurn] = useState(1);
-  const [winner, setWinner] = useState("noone");
+
+  const checkForGameOver = () => {
+    if (totalSpaces.length >= 15) {
+      dispatch({
+        type: types.GAME_OVER
+      });
+    }
+  };
 
   // :::::::::::: Update Component's State when Global State Changes :::::::::::::::
   useEffect(() => {
     //console.log(state);
     setBoard(state.gameBoard);
-    if (totalSpaces.length >= 16) {
-      dispatch({
-        type: types.GAME_OVER
-      });
-    }
   }, [state]);
 
   // ::::::::::::: Sets up the variables ::::::::::::::::::::::::::::::::::::::
@@ -72,6 +74,7 @@ const BoxGrid = () => {
         }
         allWins = [xWins, oWins]; // Assigns allWins to total number of wins for each player
       }
+
       return [];
     });
     //console.log(allWins);
@@ -80,11 +83,11 @@ const BoxGrid = () => {
       type: types.POINTS,
       payload: { amount: allWins }
     });
+    checkForGameOver();
   };
-  const totalSpaces = state.gameBoard.filter(space => space !== "");
-  // const checkForEndGame = () => {
 
-  // }
+  // totalSpaces is assigned the array of player placements to be used as a .length useEffect check
+  const totalSpaces = state.gameBoard.filter(space => space !== "");
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
