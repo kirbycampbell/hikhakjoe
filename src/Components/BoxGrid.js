@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StoreContext, StoreProvider } from "../context/StoreContext";
+import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 
@@ -31,44 +31,62 @@ const winningCombos = [
 ];
 
 const BoxGrid = () => {
-  const { state, dispatch, actions } = useContext(StoreContext);
+  // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
+  const { state, dispatch } = useContext(StoreContext);
   const [board, setBoard] = useState([]);
   const [turn, setTurn] = useState(1);
   const [winner, setWinner] = useState("noone");
+
+  // :::::::::::: Update Component's State when Global State Changes :::::::::::::::
   useEffect(() => {
     //console.log(state);
     setBoard(state.gameBoard);
+    if (totalSpaces.length >= 16) {
+      dispatch({
+        type: types.GAME_OVER
+      });
+    }
   }, [state]);
+
+  // ::::::::::::: Sets up the variables ::::::::::::::::::::::::::::::::::::::
   let player;
   let xWins = 0.0;
   let oWins = 0.0;
 
+  // :::::::::::::::::::: CHECK FOR WIN :::::::::::::::::::::::::::::::::::::::
   const checkForWin = () => {
-    let allWins = [xWins, oWins];
-    const result = winningCombos.filter(combo => {
+    let allWins = [xWins, oWins]; // Array of player's win count in this game
+    winningCombos.filter(combo => {
       if (
+        // If combo[0] on the board is equal to combo[1] and combo[2]
         state.gameBoard[combo[0]] === state.gameBoard[combo[1]] &&
         state.gameBoard[combo[1]] === state.gameBoard[combo[2]] &&
-        state.gameBoard[combo[0]] != ""
+        state.gameBoard[combo[0]] !== ""
       ) {
         //setWinner("We've Got A Winner");
         if (state.gameBoard[combo[0]] === "x") {
-          xWins++;
+          xWins++; // Add to the xWins array
         }
         if (state.gameBoard[combo[0]] === "o") {
-          oWins++;
+          oWins++; // Add to the oWins array
         }
-
-        allWins = [xWins, oWins];
+        allWins = [xWins, oWins]; // Assigns allWins to total number of wins for each player
       }
+      return [];
     });
-    console.log(allWins);
+    //console.log(allWins);
     dispatch({
+      // Send number of wins to global state for points
       type: types.POINTS,
       payload: { amount: allWins }
     });
   };
-  // The rendering of the icon state.gameBoard[0] is causing errors currently
+  const totalSpaces = state.gameBoard.filter(space => space !== "");
+  // const checkForEndGame = () => {
+
+  // }
+
+  // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
     //console.log(i);
     if (state.gameBoard[i] === "") {
@@ -85,13 +103,13 @@ const BoxGrid = () => {
       });
       checkForWin();
     } else {
-      console.log("Invalid MOVE SISTERSON");
+      console.log("Invalid MOVE. GO AGAIN!");
     }
   };
 
   return (
     <div className="box-container">
-      {winner === "noone" && (
+      {!state.winner && (
         <div className="game-box">
           <div className="row-container">
             <div className="row">
@@ -228,7 +246,7 @@ const BoxGrid = () => {
           </div>
         </div>
       )}{" "}
-      {/* {winner != "noone" && <div>We've Got A Winner!</div>} */}
+      {state.winner && <div>END OF GAME - PRESS RESET</div>}
     </div>
   );
 };

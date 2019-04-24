@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { StoreContext, StoreProvider } from "./context/StoreContext";
+import { StoreProvider } from "./context/StoreContext";
 
 ReactDOM.render(
   <StoreProvider>

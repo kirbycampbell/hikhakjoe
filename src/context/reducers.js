@@ -2,7 +2,8 @@ const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   player: 1,
   p1Points: 0,
-  p2Points: 0
+  p2Points: 0,
+  winner: false
 };
 
 const types = {
@@ -23,7 +24,8 @@ const reducer = (state = initialState, action) => {
       });
     case types.RESET_GAME:
       return {
-        gameBoard: Array(16).fill("")
+        gameBoard: Array(16).fill(""),
+        winner: false
       };
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;
@@ -32,10 +34,11 @@ const reducer = (state = initialState, action) => {
         p1Points: p1,
         p2Points: p2
       });
-    // case types.GAME_OVER:
-    //   return {
-    //     gameBoard: Array(16).fill("")
-    //   };
+    case types.GAME_OVER:
+      return Object.assign({}, state, {
+        gameBoard: Array(16).fill(""),
+        winner: true
+      });
 
     default:
       throw new Error("Unexpected action");
