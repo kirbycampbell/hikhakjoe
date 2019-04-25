@@ -110,9 +110,17 @@ const BoxGrid = () => {
     }
   };
 
+  const handleNewGame = () => {
+    dispatch({ type: types.RESET_GAME });
+  };
+
+  const handleEndGame = () => {
+    dispatch({ type: types.FINISH });
+  };
+
   return (
     <div className="box-container">
-      {!state.winner && (
+      {!state.winner && !state.endGame && (
         <div className="game-box">
           <div className="row-container">
             <div className="row">
@@ -249,7 +257,21 @@ const BoxGrid = () => {
           </div>
         </div>
       )}{" "}
-      {state.winner && <div>END OF GAME - PRESS RESET</div>}
+      {state.winner && (
+        <React.Fragment>
+          <div className="new-game" onClick={handleNewGame}>
+            New Game
+          </div>
+          <div className="new-game" onClick={handleEndGame}>
+            End
+          </div>
+        </React.Fragment>
+      )}
+      {state.endGame && (
+        <div>
+          Final Points P1: {state.p1AllPoints}--- P2: {state.p2AllPoints}
+        </div>
+      )}
     </div>
   );
 };

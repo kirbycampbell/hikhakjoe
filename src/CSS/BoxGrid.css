@@ -51,6 +51,41 @@
   background: rgba(49, 49, 189, 0.153);
   cursor: pointer;
 }
+.new-game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid rgba(0, 0, 0, 0.205);
+  /* border-image: linear-gradient(to bottom, red, rgba(0, 0, 0, 0)) 1 100%; */
+  border-bottom: none;
+  border-top: none;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  background-image: linear-gradient(
+    rgba(0, 0, 255, 0.119),
+    rgba(128, 0, 128, 0.14),
+    rgba(255, 166, 0, 0.119)
+  );
+  height: 90px;
+  width: 150px;
+  cursor: pointer;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.new-game:hover {
+  border: 2px solid rgba(0, 0, 0, 0.205);
+  background-image: linear-gradient(
+    rgba(0, 0, 255, 0.219),
+    rgba(128, 0, 128, 0.24),
+    rgba(255, 166, 0, 0.219)
+  );
+}
+.new-game:active {
+  transform: translatey(2px);
+}
 
 .game-piece {
   height: 100%;

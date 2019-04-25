@@ -5,14 +5,17 @@ const initialState = {
   p2Points: 0,
   winner: false,
   p1AllPoints: 0,
-  p2AllPoints: 0
+  p2AllPoints: 0,
+  endGame: false
 };
 
 const types = {
   MAKE_MOVE_A: "MAKE_MOVE_A",
   RESET_GAME: "RESET_GAME",
   POINTS: "POINTS",
-  GAME_OVER: "GAME_OVER"
+  GAME_OVER: "GAME_OVER",
+  FINISH: "FINISH",
+  START_GAME: "START_GAME"
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +49,14 @@ const reducer = (state = initialState, action) => {
         winner: true,
         p1AllPoints: state.p1Points + endP1Points,
         p2AllPoints: state.p2Points + endP2Points
+      });
+    case types.FINISH:
+      return Object.assign({}, state, {
+        gameBoard: Array(16).fill(""),
+        winner: false,
+        p1Points: 0,
+        p2Points: 0,
+        endGame: true
       });
 
     default:
