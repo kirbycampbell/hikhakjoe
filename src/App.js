@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { StoreContext } from "./context/StoreContext";
 import { types } from "./context/reducers";
-
 import "./App.css";
 import BoxGrid from "./Components/BoxGrid";
+import GamePoints from "./Components/GamePoints";
 
 function App() {
   const { state, dispatch } = useContext(StoreContext);
@@ -13,10 +13,7 @@ function App() {
   return (
     <div className="App">
       <div className="title">Hik Hak Joe</div>
-      <div>
-        Game Points: <br />
-        P1 Points: {state.p1Points} ---- P2 Points: {state.p2Points}
-      </div>
+      <GamePoints />
       <BoxGrid />
       <div>
         Overall Points: <br />
