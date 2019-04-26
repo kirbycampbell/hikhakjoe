@@ -14,17 +14,21 @@ function App() {
   return (
     <div className="App">
       <div className="title">Hik Hak Joe</div>
-      <GamePoints />
-      <BoxGrid />
+      {state.gameType === "ask" && (
+        <React.Fragment>
+          <GamePoints />
+          <BoxGrid />
 
-      <OverallPoints
-        p1Points={state.p1AllPoints}
-        p2Points={state.p2AllPoints}
-      />
+          <OverallPoints
+            p1Points={state.p1AllPoints}
+            p2Points={state.p2AllPoints}
+          />
 
-      <button className="reset-btn" onClick={resetGame}>
-        Reset
-      </button>
+          <button className="reset-btn" onClick={resetGame}>
+            Reset
+          </button>
+        </React.Fragment>
+      )}
     </div>
   );
 }

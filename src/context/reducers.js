@@ -6,7 +6,8 @@ const initialState = {
   winner: false,
   p1AllPoints: 0,
   p2AllPoints: 0,
-  endGame: false
+  endGame: false,
+  gameType: "ask"
 };
 
 const types = {
@@ -15,7 +16,8 @@ const types = {
   POINTS: "POINTS",
   GAME_OVER: "GAME_OVER",
   FINISH: "FINISH",
-  START_GAME: "START_GAME"
+  START_GAME: "START_GAME",
+  GAME_TYPE: "GAME_TYPE"
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,7 +35,10 @@ const reducer = (state = initialState, action) => {
         winner: false,
         p1Points: 0,
         p2Points: 0,
-        endGame: false
+        endGame: false,
+        p1AllPoints: 0,
+        p2AllPoints: 0,
+        gameType: "ask"
       });
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;
