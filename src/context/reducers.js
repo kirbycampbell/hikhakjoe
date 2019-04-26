@@ -22,10 +22,13 @@ const types = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GAME_TYPE:
+      return Object.assign({}, state, {
+        gameType: action.payload.type_of_game
+      });
     case types.MAKE_MOVE_A:
       const newBoard = state.gameBoard;
       newBoard[action.payload.position] = action.payload.move;
-
       return Object.assign({}, state, {
         gameBoard: newBoard
       });
