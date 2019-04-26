@@ -97,7 +97,7 @@ const BoxGrid = () => {
       if (state.gameBoard[i] === "") {
         setTurn(turn + 1);
 
-        if (turn % 2 === 0) {
+        if (state.playerTurn % 2 === 0) {
           player = "o";
         } else {
           player = "x";
@@ -110,6 +110,25 @@ const BoxGrid = () => {
       } else {
         console.log("Invalid MOVE. GO AGAIN!");
       }
+    } else if (state.gameType === "single") {
+      if (state.gameBoard[i] === "") {
+        setTurn(turn + 1);
+
+        if (state.playerTurn % 2 === 0) {
+          player = "o";
+        } else {
+          player = "x";
+        }
+        dispatch({
+          type: types.MAKE_MOVE_A,
+          payload: { move: player, position: i }
+        });
+        checkForWin();
+      } else {
+        console.log("Invalid MOVE. GO AGAIN!");
+      }
+    } else if (state.gameType === "zero") {
+      console.log("Zero Called... TODO");
     }
   };
 
