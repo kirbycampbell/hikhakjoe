@@ -7,7 +7,8 @@ const initialState = {
   p1AllPoints: 0,
   p2AllPoints: 0,
   endGame: false,
-  gameType: "ask"
+  gameType: "ask",
+  playerTurn: 1
 };
 
 const types = {
@@ -17,7 +18,8 @@ const types = {
   GAME_OVER: "GAME_OVER",
   FINISH: "FINISH",
   START_GAME: "START_GAME",
-  GAME_TYPE: "GAME_TYPE"
+  GAME_TYPE: "GAME_TYPE",
+  CONTINUE: "CONTINUE"
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,7 +32,8 @@ const reducer = (state = initialState, action) => {
       const newBoard = state.gameBoard;
       newBoard[action.payload.position] = action.payload.move;
       return Object.assign({}, state, {
-        gameBoard: newBoard
+        gameBoard: newBoard,
+        playerTurn: state.playerTurn + 1
       });
     case types.RESET_GAME:
       return Object.assign({}, state, {
@@ -42,6 +45,15 @@ const reducer = (state = initialState, action) => {
         p1AllPoints: 0,
         p2AllPoints: 0,
         gameType: "ask"
+      });
+    case types.CONTINUE:
+      return Object.assign({}, state, {
+        gameBoard: Array(16).fill(""),
+        winner: false,
+        p1Points: 0,
+        p2Points: 0,
+        endGame: false,
+        playerTurn: state.playerTurn + 1
       });
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;

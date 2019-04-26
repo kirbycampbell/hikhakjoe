@@ -3,33 +3,34 @@ import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 import InnerBoxes from "./InnerBoxes";
+import { winningCombos } from "../Data/WinCombos";
 
-const winningCombos = [
-  [0, 1, 2],
-  [1, 2, 3],
-  [3, 6, 9],
-  [3, 7, 11],
-  [5, 6, 7],
-  [4, 5, 6],
-  [8, 9, 10],
-  [9, 10, 11],
-  [13, 14, 15],
-  [5, 10, 15],
-  [0, 4, 8],
-  [0, 5, 10],
-  [4, 8, 12],
-  [12, 13, 14],
-  [6, 9, 12],
-  [7, 11, 15],
-  [1, 6, 11],
-  [2, 5, 8],
-  [4, 9, 14],
-  [6, 10, 14],
-  [5, 9, 13],
-  [1, 5, 9],
-  [2, 6, 10],
-  [7, 10, 13]
-];
+// const winningCombos = [
+//   [0, 1, 2],
+//   [1, 2, 3],
+//   [3, 6, 9],
+//   [3, 7, 11],
+//   [5, 6, 7],
+//   [4, 5, 6],
+//   [8, 9, 10],
+//   [9, 10, 11],
+//   [13, 14, 15],
+//   [5, 10, 15],
+//   [0, 4, 8],
+//   [0, 5, 10],
+//   [4, 8, 12],
+//   [12, 13, 14],
+//   [6, 9, 12],
+//   [7, 11, 15],
+//   [1, 6, 11],
+//   [2, 5, 8],
+//   [4, 9, 14],
+//   [6, 10, 14],
+//   [5, 9, 13],
+//   [1, 5, 9],
+//   [2, 6, 10],
+//   [7, 10, 13]
+// ];
 
 const BoxGrid = () => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
@@ -92,27 +93,28 @@ const BoxGrid = () => {
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
-    //console.log(i);
-    if (state.gameBoard[i] === "") {
-      setTurn(turn + 1);
+    if (state.gameType === "duel") {
+      if (state.gameBoard[i] === "") {
+        setTurn(turn + 1);
 
-      if (turn % 2 === 0) {
-        player = "o";
+        if (turn % 2 === 0) {
+          player = "o";
+        } else {
+          player = "x";
+        }
+        dispatch({
+          type: types.MAKE_MOVE_A,
+          payload: { move: player, position: i }
+        });
+        checkForWin();
       } else {
-        player = "x";
+        console.log("Invalid MOVE. GO AGAIN!");
       }
-      dispatch({
-        type: types.MAKE_MOVE_A,
-        payload: { move: player, position: i }
-      });
-      checkForWin();
-    } else {
-      console.log("Invalid MOVE. GO AGAIN!");
     }
   };
 
   const handleNewGame = () => {
-    dispatch({ type: types.RESET_GAME });
+    dispatch({ type: types.CONTINUE });
   };
 
   const handleEndGame = () => {
@@ -135,7 +137,7 @@ const BoxGrid = () => {
     } else if (state.p1AllPoints < state.p2AllPoints) {
       return <div>Winner of all games is Player 2!</div>;
     } else {
-      return <div>TIE GAME TOTALS! WOW!!!</div>;
+      return <div>TIE META-GAME! WOW!!!</div>;
     }
   };
 
@@ -153,7 +155,7 @@ const BoxGrid = () => {
           </div>
           <div className="end-button-container">
             <div className="new-game" onClick={handleNewGame}>
-              New Game
+              Continue
             </div>
             <div className="new-game" onClick={handleEndGame}>
               End

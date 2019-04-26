@@ -4,9 +4,10 @@ import "../CSS/BoxGrid.css";
 import "../CSS/GameSelect.css";
 import { types } from "../context/reducers";
 
-const GameSelect = selection => {
+const GameSelect = () => {
   const { dispatch } = useContext(StoreContext);
-  const handleGameType = () => {
+
+  const handleGameType = selection => {
     dispatch({ type: types.GAME_TYPE, payload: { type_of_game: selection } });
   };
   return (
