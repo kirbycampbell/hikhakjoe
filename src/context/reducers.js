@@ -32,7 +32,8 @@ const reducer = (state = initialState, action) => {
         gameBoard: Array(16).fill(""),
         winner: false,
         p1Points: 0,
-        p2Points: 0
+        p2Points: 0,
+        endGame: false
       });
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;

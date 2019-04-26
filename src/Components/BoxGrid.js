@@ -129,6 +129,16 @@ const BoxGrid = () => {
     }
   };
 
+  const OverallWinner = () => {
+    if (state.p1AllPoints > state.p2AllPoints) {
+      return <div>Winner of all games is Player 1!</div>;
+    } else if (state.p1AllPoints < state.p2AllPoints) {
+      return <div>Winner of all games is Player 2!</div>;
+    } else {
+      return <div>TIE GAME TOTALS! WOW!!!</div>;
+    }
+  };
+
   return (
     <div className="box-container">
       {!state.winner && !state.endGame && (
@@ -152,8 +162,12 @@ const BoxGrid = () => {
         </div>
       )}
       {state.endGame && (
-        <div>
-          Final Points P1: {state.p1AllPoints}--- P2: {state.p2AllPoints}
+        <div className="game-over-container">
+          <div className="points-game-over">
+            <div className="point-title">
+              <OverallWinner />
+            </div>
+          </div>
         </div>
       )}
     </div>

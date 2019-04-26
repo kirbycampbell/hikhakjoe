@@ -22,7 +22,9 @@ function App() {
         p2Points={state.p2AllPoints}
       />
 
-      <button onClick={resetGame}>Reset</button>
+      <button className="reset-btn" onClick={resetGame}>
+        Reset
+      </button>
     </div>
   );
 }

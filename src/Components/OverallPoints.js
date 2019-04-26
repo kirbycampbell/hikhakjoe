@@ -3,13 +3,13 @@ import "../CSS/OverallPoints.css";
 
 const OverallPoints = props => {
   return (
-    <div className="upper-container">
-      <div className="game-point">Overall Points:</div>
-      <div className="points">
-        P1 Points: <div className="num">{props.p1Points}</div>
+    <div className="bottom-container">
+      <div className="overall-point">Overall Points:</div>
+      <div className="points-o">
+        P1 Points: <div className="num-o">{props.p1Points}</div>
       </div>
-      <div className="points">
-        P2 Points: <div className="num">{props.p2Points}</div>
+      <div className="points-o">
+        P2 Points: <div className="num-o">{props.p2Points}</div>
       </div>
     </div>
   );
