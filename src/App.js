@@ -4,6 +4,7 @@ import { types } from "./context/reducers";
 import "./App.css";
 import BoxGrid from "./Components/BoxGrid";
 import GamePoints from "./Components/GamePoints";
+import OverallPoints from "./Components/OverallPoints";
 
 function App() {
   const { state, dispatch } = useContext(StoreContext);
@@ -15,11 +16,12 @@ function App() {
       <div className="title">Hik Hak Joe</div>
       <GamePoints />
       <BoxGrid />
-      <div>
-        Overall Points: <br />
-        P1 Overall Points: {state.p1AllPoints} ------ P2 Overall Points:
-        {state.p2AllPoints}
-      </div>
+
+      <OverallPoints
+        p1Points={state.p1AllPoints}
+        p2Points={state.p2AllPoints}
+      />
+
       <button onClick={resetGame}>Reset</button>
     </div>
   );

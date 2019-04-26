@@ -119,20 +119,37 @@ const BoxGrid = () => {
     dispatch({ type: types.FINISH });
   };
 
+  const WinnerPerson = () => {
+    if (state.p1Points > state.p2Points) {
+      return <div>Winner is Player 1!</div>;
+    } else if (state.p1Points < state.p2Points) {
+      return <div>Winner is Player 2!</div>;
+    } else {
+      return <div>TIE GAME!</div>;
+    }
+  };
+
   return (
     <div className="box-container">
       {!state.winner && !state.endGame && (
         <InnerBoxes handleBoxClick={handleBoxClick} board={board} />
       )}{" "}
       {state.winner && (
-        <React.Fragment>
-          <div className="new-game" onClick={handleNewGame}>
-            New Game
+        <div className="game-over-container">
+          <div className="points-game-over">
+            <div className="point-title">
+              <WinnerPerson />
+            </div>
           </div>
-          <div className="new-game" onClick={handleEndGame}>
-            End
+          <div className="end-button-container">
+            <div className="new-game" onClick={handleNewGame}>
+              New Game
+            </div>
+            <div className="new-game" onClick={handleEndGame}>
+              End
+            </div>
           </div>
-        </React.Fragment>
+        </div>
       )}
       {state.endGame && (
         <div>

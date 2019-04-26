@@ -1,8 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { StoreContext } from "../context/StoreContext";
-import "../CSS/BoxGrid.css";
+import React from "react";
 import "../CSS/InnerBoxes.css";
-import { types } from "../context/reducers";
 
 const InnerBoxes = props => {
   return (

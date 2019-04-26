@@ -1,0 +1,49 @@
+.upper-container {
+  align-items: center;
+
+  justify-content: center;
+  text-align: center;
+  width: 80%;
+  height: 110px;
+  margin: auto;
+  background: rgba(54, 180, 149, 0.521);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.game-point {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: rgb(217, 230, 241);
+  font-weight: bold;
+}
+
+.points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(109, 0, 0);
+}
+
+.num {
+  display: flex;
+  font-size: 26px;
+  border-radius: 8px;
+  margin-left: 4px;
+  background: yellow;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
