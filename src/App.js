@@ -15,21 +15,18 @@ function App() {
   return (
     <div className="App">
       <div className="title">Hik Hak Joe</div>
-      {state.gameType === "ask" && (
-        <React.Fragment>
-          <GameSelect />
-        </React.Fragment>
-      )}
+      {/*:::::::::::: HOME GAME TYPE SELECT SECTION :::::::::::::::::::::::::: */}
+      {state.gameType === "ask" && <GameSelect />}
+
+      {/*:::::::::::: MAIN GAME SECTION :::::::::::::::::::::::::: */}
       {state.gameType !== "ask" && (
         <React.Fragment>
           <GamePoints />
           <BoxGrid />
-
           <OverallPoints
             p1Points={state.p1AllPoints}
             p2Points={state.p2AllPoints}
           />
-
           <button className="reset-btn" onClick={resetGame}>
             Reset
           </button>

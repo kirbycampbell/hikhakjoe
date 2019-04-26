@@ -24,10 +24,12 @@ const types = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    // GAME_TYPE - Selects 1 player, 2 player, or 0 player games.
     case types.GAME_TYPE:
       return Object.assign({}, state, {
         gameType: action.payload.type_of_game
       });
+    // MAKE_MOVE_A - makes the selected move on the board
     case types.MAKE_MOVE_A:
       const newBoard = state.gameBoard;
       newBoard[action.payload.position] = action.payload.move;
@@ -35,6 +37,7 @@ const reducer = (state = initialState, action) => {
         gameBoard: newBoard,
         playerTurn: state.playerTurn + 1
       });
+    // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:
       return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
@@ -46,6 +49,7 @@ const reducer = (state = initialState, action) => {
         p2AllPoints: 0,
         gameType: "ask"
       });
+    // CONTINUE - adds the points into overall and plays another game
     case types.CONTINUE:
       return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
@@ -55,6 +59,7 @@ const reducer = (state = initialState, action) => {
         endGame: false,
         playerTurn: state.playerTurn + 1
       });
+    // POINTS - keeps track of points each user scores
     case types.POINTS:
       const p1 = action.payload.amount[0] * 36;
       const p2 = action.payload.amount[1] * 36;
@@ -62,6 +67,7 @@ const reducer = (state = initialState, action) => {
         p1Points: p1,
         p2Points: p2
       });
+    // GAME_OVER - when single game is over - adds games points to total points
     case types.GAME_OVER:
       const endP1Points = state.p1AllPoints;
       const endP2Points = state.p2AllPoints;
@@ -71,7 +77,9 @@ const reducer = (state = initialState, action) => {
         p1AllPoints: state.p1Points + endP1Points,
         p2AllPoints: state.p2Points + endP2Points
       });
+    // FINISH - when user is clicks END (done playing games) this shows the overall winner message
     case types.FINISH:
+      console.log("finish called");
       return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
         winner: false,
@@ -79,7 +87,7 @@ const reducer = (state = initialState, action) => {
         p2Points: 0,
         endGame: true
       });
-
+    // DEFAULT STATEMENT - catches bad action.types
     default:
       throw new Error("Unexpected action");
   }
