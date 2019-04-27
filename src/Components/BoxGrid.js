@@ -1,41 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 import InnerBoxes from "./InnerBoxes";
 import { winningCombos } from "../Data/WinCombos";
 
-// const winningCombos = [
-//   [0, 1, 2],
-//   [1, 2, 3],
-//   [3, 6, 9],
-//   [3, 7, 11],
-//   [5, 6, 7],
-//   [4, 5, 6],
-//   [8, 9, 10],
-//   [9, 10, 11],
-//   [13, 14, 15],
-//   [5, 10, 15],
-//   [0, 4, 8],
-//   [0, 5, 10],
-//   [4, 8, 12],
-//   [12, 13, 14],
-//   [6, 9, 12],
-//   [7, 11, 15],
-//   [1, 6, 11],
-//   [2, 5, 8],
-//   [4, 9, 14],
-//   [6, 10, 14],
-//   [5, 9, 13],
-//   [1, 5, 9],
-//   [2, 6, 10],
-//   [7, 10, 13]
-// ];
-
 const BoxGrid = () => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
   const { state, dispatch } = useContext(StoreContext);
-  const [board, setBoard] = useState([]);
   const [turn, setTurn] = useState(1);
 
   const checkForGameOver = () => {
@@ -45,12 +17,6 @@ const BoxGrid = () => {
       });
     }
   };
-
-  // :::::::::::: Update Component's State when Global State Changes :::::::::::::::
-  useEffect(() => {
-    //console.log(state);
-    setBoard(state.gameBoard);
-  }, [state]);
 
   // ::::::::::::: Sets up the variables ::::::::::::::::::::::::::::::::::::::
   let player;
@@ -67,7 +33,6 @@ const BoxGrid = () => {
         state.gameBoard[combo[1]] === state.gameBoard[combo[2]] &&
         state.gameBoard[combo[0]] !== ""
       ) {
-        //setWinner("We've Got A Winner");
         if (state.gameBoard[combo[0]] === "x") {
           xWins++; // Add to the xWins array
         }
@@ -79,7 +44,6 @@ const BoxGrid = () => {
 
       return [];
     });
-    //console.log(allWins);
     dispatch({
       // Send number of wins to global state for points
       type: types.POINTS,
@@ -110,25 +74,6 @@ const BoxGrid = () => {
       } else {
         console.log("Invalid MOVE. GO AGAIN!");
       }
-    } else if (state.gameType === "single") {
-      if (state.gameBoard[i] === "") {
-        setTurn(turn + 1);
-
-        if (state.playerTurn % 2 === 0) {
-          player = "o";
-        } else {
-          player = "x";
-        }
-        dispatch({
-          type: types.MAKE_MOVE_A,
-          payload: { move: player, position: i }
-        });
-        checkForWin();
-      } else {
-        console.log("Invalid MOVE. GO AGAIN!");
-      }
-    } else if (state.gameType === "zero") {
-      console.log("Zero Called... TODO");
     }
   };
 
@@ -163,7 +108,7 @@ const BoxGrid = () => {
   return (
     <div className="box-container">
       {!state.winner && !state.endGame && (
-        <InnerBoxes handleBoxClick={handleBoxClick} board={board} />
+        <InnerBoxes handleBoxClick={handleBoxClick} board={state.gameBoard} />
       )}{" "}
       {state.winner && (
         <div className="game-over-container">
