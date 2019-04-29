@@ -1,15 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 import InnerBoxes from "./InnerBoxes";
-import { winningCombos } from "../Data/WinCombos";
 import { WinnerPerson, OverallWinner } from "./Winners";
 
 const BoxGrid = () => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
   const { state, dispatch } = useContext(StoreContext);
-  //const [turn, setTurn] = useState(1);
 
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
@@ -21,11 +19,6 @@ const BoxGrid = () => {
       });
     }
   };
-
-  // ::::::::::::: Sets up the variables ::::::::::::::::::::::::::::::::::::::
-  let player;
-  let xWins = 0.0;
-  let oWins = 0.0;
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
@@ -47,26 +40,6 @@ const BoxGrid = () => {
   const handleEndGame = () => {
     dispatch({ type: types.FINISH });
   };
-
-  // const WinnerPerson = () => {
-  //   if (state.p1Points > state.p2Points) {
-  //     return <div>Winner is Player 1!</div>;
-  //   } else if (state.p1Points < state.p2Points) {
-  //     return <div>Winner is Player 2!</div>;
-  //   } else {
-  //     return <div>TIE GAME!</div>;
-  //   }
-  // };
-
-  // const OverallWinner = () => {
-  //   if (state.p1AllPoints > state.p2AllPoints) {
-  //     return <div>Winner of all games is Player 1!</div>;
-  //   } else if (state.p1AllPoints < state.p2AllPoints) {
-  //     return <div>Winner of all games is Player 2!</div>;
-  //   } else {
-  //     return <div>TIE META-GAME! WOW!!!</div>;
-  //   }
-  // };
 
   return (
     <div className="box-container">
