@@ -32,13 +32,16 @@ const reducer = (state = initialState, action) => {
       });
     //:::: MAKE_MOVE_A - makes the selected move on the board :::::::
     case types.MAKE_MOVE_A:
-      let newBoardy = state.gameBoard;
-      let chosenPosition = action.payload.position;
-      newBoardy[chosenPosition] = state.player;
+      console.log(action.payload.gameData);
+      let newBoard = action.payload.gameData.newBoard;
+      const p1 = action.payload.gameData.wins.xWins.length * 36;
+      const p2 = action.payload.gameData.wins.oWins.length * 36;
       return Object.assign({}, state, {
-        gameBoard: newBoardy,
+        gameBoard: newBoard,
         player: state.nextPlayer,
-        nextPlayer: state.player
+        nextPlayer: state.player,
+        p1Points: p1,
+        p2Points: p2
       });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:
@@ -63,13 +66,13 @@ const reducer = (state = initialState, action) => {
         playerTurn: state.playerTurn + 1
       });
     // POINTS - keeps track of points each user scores
-    case types.POINTS:
-      const p1 = action.payload.allPoints.xWins.length * 36;
-      const p2 = action.payload.allPoints.oWins.length * 36;
-      return Object.assign({}, state, {
-        p1Points: p1,
-        p2Points: p2
-      });
+    // case types.POINTS:
+    //   const p1 = action.payload.allPoints.xWins.length * 36;
+    //   const p2 = action.payload.allPoints.oWins.length * 36;
+    //   return Object.assign({}, state, {
+    //     p1Points: p1,
+    //     p2Points: p2
+    //   });
     // GAME_OVER - when single game is over - adds games points to total points
     case types.GAME_OVER:
       const endP1Points = state.p1AllPoints;

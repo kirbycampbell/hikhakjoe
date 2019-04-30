@@ -32,7 +32,7 @@ const BoxGrid = () => {
       console.log(newData);
       dispatch({
         type: types.MAKE_MOVE_A,
-        payload: { position: i }
+        payload: { gameData: newData }
       });
     } else {
       console.log("Invalid MOVE. GO AGAIN!");
