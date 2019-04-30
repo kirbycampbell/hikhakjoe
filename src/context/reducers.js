@@ -1,4 +1,5 @@
 import { winningCombos } from "../Data/WinCombos";
+import checkWin from "./methods";
 
 const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
@@ -33,41 +34,13 @@ const reducer = (state = initialState, action) => {
       });
     //:::: MAKE_MOVE_A - makes the selected move on the board :::::::
     case types.MAKE_MOVE_A:
-      let player;
-      const newBoard = state.gameBoard;
-      if (state.playerTurn % 2 === 0) {
-        player = "o";
-      } else {
-        player = "x";
-      }
-      newBoard[action.payload.position] = player;
-
-      let xWins = 0;
-      let oWins = 0;
-      //let allWins = [xWins, oWins];
-      const allWins = winningCombos.filter(combo => {
-        if (
-          // If combo[0] on the board is equal to combo[1] and combo[2]
-          newBoard[combo[0]] === newBoard[combo[1]] &&
-          newBoard[combo[1]] === newBoard[combo[2]] &&
-          newBoard[combo[0]] !== ""
-        ) {
-          if (newBoard[combo[0]] === "x") {
-            xWins++; // Add to the xWins array
-          }
-          if (newBoard[combo[0]] === "o") {
-            oWins++; // Add to the oWins array
-          }
-        }
-        //allWins = [xWins, oWins];
-        return [xWins, oWins];
-      });
-      return Object.assign({}, state, {
-        gameBoard: newBoard,
-        playerTurn: state.playerTurn + 1,
-        p1Points: allWins[0],
-        p2Points: allWins[1]
-      });
+      checkWin(action.payload.position);
+    // return Object.assign({}, state, {
+    //   gameBoard: newBoard,
+    //   playerTurn: state.playerTurn + 1,
+    //   p1Points: allWins[0],
+    //   p2Points: allWins[1]
+    // });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:
       return Object.assign({}, state, {
