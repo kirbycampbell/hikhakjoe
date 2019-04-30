@@ -44,8 +44,8 @@ const reducer = (state = initialState, action) => {
 
       let xWins = 0;
       let oWins = 0;
-      let allWins = [xWins, oWins];
-      winningCombos.filter(combo => {
+      //let allWins = [xWins, oWins];
+      const allWins = winningCombos.filter(combo => {
         if (
           // If combo[0] on the board is equal to combo[1] and combo[2]
           newBoard[combo[0]] === newBoard[combo[1]] &&
@@ -59,8 +59,8 @@ const reducer = (state = initialState, action) => {
             oWins++; // Add to the oWins array
           }
         }
-        allWins = [xWins, oWins];
-        return [];
+        //allWins = [xWins, oWins];
+        return [xWins, oWins];
       });
       return Object.assign({}, state, {
         gameBoard: newBoard,
