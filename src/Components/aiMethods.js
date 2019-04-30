@@ -10,7 +10,6 @@ function shuffle(array) {
   }
   return array;
 }
-let shuffled = shuffle(highValueSpots);
 const edgeSpots = [0, 1, 2, 3, 4, 7, 8, 11, 12, 15];
 let shuffledEdge = shuffle(edgeSpots);
 
@@ -31,28 +30,40 @@ export function Move(board, player) {
 
 function decideMove(options, board, player, opp) {
   let move;
+  let HV = shuffle(highValueSpots);
+
   if (
+    // IF GAME IS STARTING HEAD FOR CENTER SPOTS
     options.aiDoubleCombos.length === 0 &&
     options.opponentDoublecombos.length === 0 &&
     options.aiSingleCombos.length === 0
   ) {
-    console.log("no double combos");
-    if (
-      options.aiSingleCombos.length === 0 //&&
-      //options.opponentSinglecombos.length === 0
-    ) {
-      console.log("no single combos");
-      if (options.blankCombos.length > 1) {
-        if (board[shuffled[0]] === "") {
-          move = shuffled[0];
-        } else if (board[shuffled[1]] === "") {
-          move = shuffled[1];
-        } else if (board[shuffled[2]] === "") {
-          move = shuffled[2];
-        } else if (board[shuffled[3]] === "") {
-          move = shuffled[3];
-        }
-      }
+    move = highValueMove(board, options, HV);
+  } else if (
+    options.aiDoubleCombos.length < options.opponentDoublecombos.length
+  ) {
+    console.log("block person");
+  } else if (
+    options.aiDoubleCombos.length > options.opponentDoublecombos.length
+  ) {
+    console.log("Go for points");
+  } else if (options.aiSingleCombos.length > 1) {
+    console.log("go for combo ai");
+  }
+  return move;
+}
+
+function highValueMove(board, options, HV) {
+  let move;
+  if (options.blankCombos.length > 1) {
+    if (board[HV[0]] === "") {
+      move = HV[0];
+    } else if (board[HV[1]] === "") {
+      move = HV[1];
+    } else if (board[HV[2]] === "") {
+      move = HV[2];
+    } else if (board[HV[3]] === "") {
+      move = HV[3];
     }
   }
   return move;
