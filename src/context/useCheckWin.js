@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
-import { StoreContext } from "../context/StoreContext";
+import { useContext } from "react";
+import { StoreContext } from "./StoreContext";
 import "../CSS/BoxGrid.css";
-import { types } from "../context/reducers";
 import { winningCombos } from "../Data/WinCombos";
 
-function checkWin(i) {
-  const { state, dispatch } = useContext(StoreContext);
+function useCheckWin(i) {
+  const { state } = useContext(StoreContext);
 
   let player;
   const newBoard = state.gameBoard;
@@ -16,9 +15,8 @@ function checkWin(i) {
   }
   newBoard[i] = player;
 
-  let xWins = 0;
-  let oWins = 0;
-  let allWins = [xWins, oWins];
+  let allWins = { xWins: [], oWins: [] };
+
   winningCombos.filter(combo => {
     if (
       // If combo[0] on the board is equal to combo[1] and combo[2]
@@ -27,15 +25,17 @@ function checkWin(i) {
       newBoard[combo[0]] !== ""
     ) {
       if (newBoard[combo[0]] === "x") {
-        xWins++; // Add to the xWins array
+        allWins.xWins.push(combo); // Add to the xWins array
       }
       if (newBoard[combo[0]] === "o") {
-        oWins++; // Add to the oWins array
+        allWins.oWins.push(combo); // Add to the oWins array
       }
     }
-    allWins = [xWins, oWins];
+
     return [];
   });
+  //console.log(allWins);
+  return allWins;
 }
 
-export default checkWin;
+export default useCheckWin;

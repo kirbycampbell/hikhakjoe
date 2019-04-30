@@ -1,6 +1,3 @@
-import { winningCombos } from "../Data/WinCombos";
-import checkWin from "./methods";
-
 const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   player: 1,
@@ -11,7 +8,7 @@ const initialState = {
   p2AllPoints: 0,
   endGame: false,
   gameType: "ask",
-  playerTurn: 1
+  playerTurn: 0
 };
 
 const types = {
@@ -26,6 +23,13 @@ const types = {
 };
 
 const reducer = (state = initialState, action) => {
+  // Assigns moveSymbol
+  let moveSymbol = "x";
+  if (state.playerTurn % 2 === 0) {
+    moveSymbol = "x";
+  } else {
+    moveSymbol = "o";
+  }
   switch (action.type) {
     // GAME_TYPE - Selects 1 player, 2 player, or 0 player games.
     case types.GAME_TYPE:
@@ -34,13 +38,12 @@ const reducer = (state = initialState, action) => {
       });
     //:::: MAKE_MOVE_A - makes the selected move on the board :::::::
     case types.MAKE_MOVE_A:
-      checkWin(action.payload.position);
-    // return Object.assign({}, state, {
-    //   gameBoard: newBoard,
-    //   playerTurn: state.playerTurn + 1,
-    //   p1Points: allWins[0],
-    //   p2Points: allWins[1]
-    // });
+      let newBoard = state.gameBoard;
+      newBoard[action.payload.position] = moveSymbol;
+      return Object.assign({}, state, {
+        gameBoard: newBoard,
+        playerTurn: state.playerTurn + 1
+      });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:
       return Object.assign({}, state, {
