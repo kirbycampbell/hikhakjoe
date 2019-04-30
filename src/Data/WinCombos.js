@@ -24,3 +24,6 @@ export const winningCombos = [
   [2, 6, 10],
   [7, 10, 13]
 ];
+
+export const highValueSpots = [5, 6, 9, 10];
+export const edgeSpots = [0, 1, 2, 3, 4, 7, 8, 11, 12, 15];

@@ -1,8 +1,8 @@
-import { winningCombos } from "../Data/WinCombos";
-const highValueSpots = [5, 6, 9, 10];
-// const shuffled = highValueSpots.sort(function(a, b) {
-//   return 0.5 - Math.random();
-// });
+import { winningCombos, highValueSpots, edgeSpots } from "../Data/WinCombos";
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//:::::::::::::General Functions (Shuffle, Count, & Sort Objects):::::::::
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
@@ -10,8 +10,39 @@ function shuffle(array) {
   }
   return array;
 }
-const edgeSpots = [0, 1, 2, 3, 4, 7, 8, 11, 12, 15];
 
+// Returns Object of position and # of times it appears - {0: 2, 3: 1, 12: 2}
+function count(array) {
+  var counts = {};
+  array.forEach(function(x) {
+    counts[x] = (counts[x] || 0) + 1;
+  });
+  return counts;
+}
+
+// Sorts object by value
+function sortObject(obj) {
+  var arr = [];
+  var prop;
+  for (prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      arr.push({
+        key: prop,
+        value: obj[prop]
+      });
+    }
+  }
+  arr.sort(function(a, b) {
+    return b.value - a.value;
+  });
+  return arr; // returns array
+}
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// :::::::::::::::::::: MAIN MOVE FUNCTION ::::::::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 export function Move(board, player) {
   let opponent;
   if (player === "x") {
@@ -27,49 +58,61 @@ export function Move(board, player) {
   return { newBoard, wins };
 }
 
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// :::::::::::::::::::: STRATEGY SECTION ::::::::::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+// DECIDE MOVE picks the move type for ai - Offense, Defense, or Starting ::::::
 function decideMove(options, board, player, opp) {
   let move;
   let HV = shuffle(highValueSpots);
   let HVEdge = shuffle(edgeSpots);
+  // IF GAME IS STARTING HEAD FOR CENTER SPOTS
   if (
-    // IF GAME IS STARTING HEAD FOR CENTER SPOTS
     options.aiDoubleCombos.length === 0 &&
     options.opponentDoublecombos.length === 0 &&
     options.aiSingleCombos.length === 0
   ) {
-    // Shoot for center spots randomly
-    move = highValueMove(board, options, HV);
+    move = highValueMove(board, options, HV); // Shoot for center spots randomly
   } else if (
-    // If Opponent is building a points move
-    options.aiDoubleCombos.length < options.opponentDoublecombos.length
+    options.aiDoubleCombos.length < options.opponentDoublecombos.length // If Opponent is building a points move
   ) {
-    // Block User's points move
-    move = blockUserMove(board, options, HV, HVEdge);
+    let block; // Block User's points move
+    block = blockUserMove(board, options, options.opponentDoublecombos);
+    move = block[0].key;
   } else if (
-    // If ai is about to win points
-    options.aiDoubleCombos.length > options.opponentDoublecombos.length
+    options.aiDoubleCombos.length > options.opponentDoublecombos.length ||
+    options.aiDoubleCombos.length === options.opponentDoublecombos.length // If ai is about to win points
   ) {
-    console.log("Go for points");
+    console.log("Go for points & block");
   } else if (options.aiSingleCombos.length > 1) {
     console.log("go for combo ai");
   }
   return move;
 }
 
-function blockUserMove(board, options, HV, HVEdge) {
-  //console.log(options);
+// Block User Move by searching combos for most important block location
+function blockUserMove(board, options, playerCombos) {
   let spacesToBlock = [];
-  const result = options.opponentDoublecombos.map(combo => {
+  // Map Through opponentDoubleCombos
+  playerCombos.map(combo => {
+    // Filter each combo space that is empty
     combo.filter(space => {
       if (board[space] === "") {
         spacesToBlock.push(space);
       }
+      return [];
     });
+    return [];
   });
-  console.log(spacesToBlock);
+  const counts = count(spacesToBlock); // returns array of empty & open spaces
+  const weightedCounts = sortObject(counts); // returns sorted Array of open spaces
+  return weightedCounts; // First item will be most important spot
 }
-
-function checkForMultiple(board, options, HV, HVEdge) {}
+// ::::::::::::::: Go For Points Or Block ::::::::::::::::::::::::::::::::::
+function goForPointsOrBlock(board, options) {
+  let block = blockUserMove(board, options); // uses above method
+}
 
 // :::::::::: Function Returns Random position in the center of the game :::::::::::::::::::::::
 function highValueMove(board, options, HV) {
