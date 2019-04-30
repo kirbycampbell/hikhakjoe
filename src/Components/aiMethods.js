@@ -11,7 +11,6 @@ function shuffle(array) {
   return array;
 }
 const edgeSpots = [0, 1, 2, 3, 4, 7, 8, 11, 12, 15];
-let shuffledEdge = shuffle(edgeSpots);
 
 export function Move(board, player) {
   let opponent;
@@ -21,7 +20,7 @@ export function Move(board, player) {
     opponent = "x";
   }
   const availableOptions = returnOptions(board, player, opponent);
-  //console.log(availableOptions);
+  console.log(availableOptions);
   const aiChosenMove = decideMove(availableOptions, board, player, opponent);
   const newBoard = tempNewBoard(board, aiChosenMove, player);
   const wins = checkWin(newBoard);
@@ -31,19 +30,23 @@ export function Move(board, player) {
 function decideMove(options, board, player, opp) {
   let move;
   let HV = shuffle(highValueSpots);
-
+  let HVEdge = shuffle(edgeSpots);
   if (
     // IF GAME IS STARTING HEAD FOR CENTER SPOTS
     options.aiDoubleCombos.length === 0 &&
     options.opponentDoublecombos.length === 0 &&
     options.aiSingleCombos.length === 0
   ) {
+    // Shoot for center spots randomly
     move = highValueMove(board, options, HV);
   } else if (
+    // If Opponent is building a points move
     options.aiDoubleCombos.length < options.opponentDoublecombos.length
   ) {
-    console.log("block person");
+    // Block User's points move
+    move = blockUserMove(board, options, HV, HVEdge);
   } else if (
+    // If ai is about to win points
     options.aiDoubleCombos.length > options.opponentDoublecombos.length
   ) {
     console.log("Go for points");
@@ -53,6 +56,22 @@ function decideMove(options, board, player, opp) {
   return move;
 }
 
+function blockUserMove(board, options, HV, HVEdge) {
+  //console.log(options);
+  let spacesToBlock = [];
+  const result = options.opponentDoublecombos.map(combo => {
+    combo.filter(space => {
+      if (board[space] === "") {
+        spacesToBlock.push(space);
+      }
+    });
+  });
+  console.log(spacesToBlock);
+}
+
+function checkForMultiple(board, options, HV, HVEdge) {}
+
+// :::::::::: Function Returns Random position in the center of the game :::::::::::::::::::::::
 function highValueMove(board, options, HV) {
   let move;
   if (options.blankCombos.length > 1) {
@@ -143,13 +162,13 @@ function returnOptions(board, ai, opponent) {
     ) {
       opponentDoublecombos.push(combo);
     } else if (
-      board[combo[0]] === opponent &&
+      board[combo[0]] === "" &&
       board[combo[1]] === opponent &&
       board[combo[2]] === opponent
     ) {
       opponentDoublecombos.push(combo);
     } else if (
-      board[combo[0]] === "" &&
+      board[combo[0]] === opponent &&
       board[combo[1]] === "" &&
       board[combo[2]] === opponent
     ) {
