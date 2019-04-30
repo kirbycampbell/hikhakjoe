@@ -8,18 +8,22 @@ const initialState = {
   p1AllPoints: 0,
   p2AllPoints: 0,
   endGame: false,
-  gameType: "ask"
+  gameType: "ask",
+  ai1: false,
+  ai2: false
 };
 
 const types = {
   MAKE_MOVE_A: "MAKE_MOVE_A",
+  MAKE_MOVE_B: "MAKE_MOVE_B",
   RESET_GAME: "RESET_GAME",
   POINTS: "POINTS",
   GAME_OVER: "GAME_OVER",
   FINISH: "FINISH",
   START_GAME: "START_GAME",
   GAME_TYPE: "GAME_TYPE",
-  CONTINUE: "CONTINUE"
+  CONTINUE: "CONTINUE",
+  MAKE_AI_MOVE: "MAKE_AI_MOVE"
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,7 +36,6 @@ const reducer = (state = initialState, action) => {
       });
     //:::: MAKE_MOVE_A - makes the selected move on the board :::::::
     case types.MAKE_MOVE_A:
-      console.log(action.payload.gameData);
       let newBoard = action.payload.gameData.newBoard;
       const p1 = action.payload.gameData.wins.xWins.length * 36;
       const p2 = action.payload.gameData.wins.oWins.length * 36;
@@ -42,6 +45,33 @@ const reducer = (state = initialState, action) => {
         nextPlayer: state.player,
         p1Points: p1,
         p2Points: p2
+      });
+    //:::: MAKE_MOVE_B - makes the selected move on the board :::::::
+    case types.MAKE_MOVE_B:
+      let newBoardB = action.payload.gameData.newBoard;
+      const human = action.payload.gameData.wins.xWins.length * 36;
+      const comp = action.payload.gameData.wins.oWins.length * 36;
+      return Object.assign({}, state, {
+        gameBoard: newBoardB,
+        player: state.nextPlayer,
+        nextPlayer: state.player,
+        p1Points: human,
+        p2Points: comp,
+        ai1: true
+      });
+    // *********** AI MOVE :::::::::::::::::::::::::::::::::::::::::::
+    case types.MAKE_AI_MOVE:
+      //console.log(action.payload);
+      let newBoardAI = action.payload.aiData.newBoard;
+      const human1 = action.payload.aiData.wins.xWins.length * 36;
+      const comp2 = action.payload.aiData.wins.oWins.length * 36;
+      return Object.assign({}, state, {
+        gameBoard: newBoardAI,
+        player: state.nextPlayer,
+        nextPlayer: state.player,
+        p1Points: human1,
+        p2Points: comp2,
+        ai1: false
       });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:

@@ -1,15 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 import InnerBoxes from "./InnerBoxes";
 import { WinnerPerson, OverallWinner } from "./Winners";
 import * as Methods from "./methods";
+import * as ai from "./aiMethods";
+import useInterval from "./useInterval";
 
 const BoxGrid = () => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
   const { state, dispatch } = useContext(StoreContext);
+  const [userMove, setUserMove] = useState(false);
 
+  useInterval(() => {
+    if (userMove) {
+      setUserMove(false);
+      makeAIMove();
+    }
+  }, 1000);
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
 
@@ -21,22 +30,47 @@ const BoxGrid = () => {
     }
   };
 
-  const setPoints = () => {};
+  const makeAIMove = () => {
+    let aiMove = ai.Move(state.gameBoard, state.player);
+    console.log("AI MOVE CALLED");
+    console.log(aiMove);
+    dispatch({
+      type: types.MAKE_AI_MOVE,
+      payload: {
+        aiData: aiMove
+      }
+    });
+  };
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
-    if (state.gameBoard[i] === "") {
-      const newData = Methods.makeMove(i, state.gameBoard, state.player);
-      //setPoints();
-      //checkForGameOver();
-      console.log(newData);
-      dispatch({
-        type: types.MAKE_MOVE_A,
-        payload: { gameData: newData }
-      });
-    } else {
-      console.log("Invalid MOVE. GO AGAIN!");
+    if (state.gameType === "duel") {
+      if (state.gameBoard[i] === "") {
+        const newData = Methods.makeMove(i, state.gameBoard, state.player);
+        dispatch({
+          type: types.MAKE_MOVE_A,
+          payload: { gameData: newData }
+        });
+      } else {
+        console.log("Invalid MOVE. GO AGAIN!");
+      }
+    } else if (state.gameType === "single") {
+      if (state.player === "x") {
+        if (state.gameBoard[i] === "") {
+          const newData = Methods.makeMove(i, state.gameBoard, state.player);
+          dispatch({
+            type: types.MAKE_MOVE_B,
+            payload: { gameData: newData }
+          });
+          setUserMove(true);
+        } else {
+          console.log("Invalid MOVE. GO AGAIN!");
+        }
+      } else if (state.player === "o") {
+        console.log("not your turn");
+      }
     }
+    checkForGameOver();
   };
 
   const handleNewGame = () => {

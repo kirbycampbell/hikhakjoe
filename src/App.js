@@ -22,6 +22,7 @@ function App() {
       {state.gameType !== "ask" && (
         <React.Fragment>
           <GamePoints />
+          <div>{state.player}'s Turn</div>
           <BoxGrid />
           <OverallPoints
             p1Points={state.p1AllPoints}

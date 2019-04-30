@@ -1,8 +1,7 @@
-import "../CSS/BoxGrid.css";
 import { winningCombos } from "../Data/WinCombos";
 
-export function makeMove(i, board, player) {
-  const newBoard = tempNewBoard(board, i, player);
+export function Move(board, player) {
+  const newBoard = tempNewBoard(board, 7, player);
   const wins = checkWin(newBoard);
   return { newBoard, wins };
 }
