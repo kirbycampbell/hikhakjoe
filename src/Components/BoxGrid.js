@@ -1,16 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
 import InnerBoxes from "./InnerBoxes";
 import { WinnerPerson, OverallWinner } from "./Winners";
-import useCheckWin from "../context/useCheckWin";
+import * as Methods from "./methods";
 
 const BoxGrid = () => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
   const { state, dispatch } = useContext(StoreContext);
-  const [position, setPosition] = useState(18);
-  const wins = useCheckWin(position);
 
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
@@ -23,24 +21,19 @@ const BoxGrid = () => {
     }
   };
 
+  const setPoints = () => {};
+
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
   const handleBoxClick = i => {
     if (state.gameBoard[i] === "") {
-      // setPosition(i);
-      // let newBoard = state.gameBoard;
-      // if (state.playerTurn % 2 === 0) {
-      //   newBoard[i] = "x";
-      // } else {
-      //   newBoard[i] = "o";
-      // }
-      // let numWins = wins;
-      //console.log(wins);
+      const newData = Methods.makeMove(i, state.gameBoard, state.player);
+      //setPoints();
+      //checkForGameOver();
+      console.log(newData);
       dispatch({
         type: types.MAKE_MOVE_A,
         payload: { position: i }
       });
-
-      //checkForGameOver();
     } else {
       console.log("Invalid MOVE. GO AGAIN!");
     }

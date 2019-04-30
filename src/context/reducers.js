@@ -1,14 +1,14 @@
 const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-  player: 1,
+  nextPlayer: "o",
+  player: "x",
   p1Points: 0,
   p2Points: 0,
   winner: false,
   p1AllPoints: 0,
   p2AllPoints: 0,
   endGame: false,
-  gameType: "ask",
-  playerTurn: 0
+  gameType: "ask"
 };
 
 const types = {
@@ -23,13 +23,7 @@ const types = {
 };
 
 const reducer = (state = initialState, action) => {
-  // Assigns moveSymbol
-  let moveSymbol = "x";
-  if (state.playerTurn % 2 === 0) {
-    moveSymbol = "x";
-  } else {
-    moveSymbol = "o";
-  }
+  // :::::::::::::::::: SWITCH REDUCER CASE MAIN::::::::::::::::::::::
   switch (action.type) {
     // GAME_TYPE - Selects 1 player, 2 player, or 0 player games.
     case types.GAME_TYPE:
@@ -38,11 +32,13 @@ const reducer = (state = initialState, action) => {
       });
     //:::: MAKE_MOVE_A - makes the selected move on the board :::::::
     case types.MAKE_MOVE_A:
-      let newBoard = state.gameBoard;
-      newBoard[action.payload.position] = moveSymbol;
+      let newBoardy = state.gameBoard;
+      let chosenPosition = action.payload.position;
+      newBoardy[chosenPosition] = state.player;
       return Object.assign({}, state, {
-        gameBoard: newBoard,
-        playerTurn: state.playerTurn + 1
+        gameBoard: newBoardy,
+        player: state.nextPlayer,
+        nextPlayer: state.player
       });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:
@@ -68,8 +64,8 @@ const reducer = (state = initialState, action) => {
       });
     // POINTS - keeps track of points each user scores
     case types.POINTS:
-      const p1 = action.payload.amount[0] * 36;
-      const p2 = action.payload.amount[1] * 36;
+      const p1 = action.payload.allPoints.xWins.length * 36;
+      const p2 = action.payload.allPoints.oWins.length * 36;
       return Object.assign({}, state, {
         p1Points: p1,
         p2Points: p2
