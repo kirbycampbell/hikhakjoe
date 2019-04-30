@@ -32,8 +32,6 @@ const BoxGrid = () => {
 
   const makeAIMove = () => {
     let aiMove = ai.Move(state.gameBoard, state.player);
-    console.log("AI MOVE CALLED");
-    console.log(aiMove);
     dispatch({
       type: types.MAKE_AI_MOVE,
       payload: {
