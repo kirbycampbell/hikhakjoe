@@ -1,4 +1,18 @@
 import { winningCombos } from "../Data/WinCombos";
+const highValueSpots = [5, 6, 9, 10];
+// const shuffled = highValueSpots.sort(function(a, b) {
+//   return 0.5 - Math.random();
+// });
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // swap elements
+  }
+  return array;
+}
+let shuffled = shuffle(highValueSpots);
+const edgeSpots = [0, 1, 2, 3, 4, 7, 8, 11, 12, 15];
+let shuffledEdge = shuffle(edgeSpots);
 
 export function Move(board, player) {
   let opponent;
@@ -9,14 +23,39 @@ export function Move(board, player) {
   }
   const availableOptions = returnOptions(board, player, opponent);
   //console.log(availableOptions);
-  const aiChosenMove = decideMove(availableOptions, player, opponent);
+  const aiChosenMove = decideMove(availableOptions, board, player, opponent);
   const newBoard = tempNewBoard(board, aiChosenMove, player);
   const wins = checkWin(newBoard);
   return { newBoard, wins };
 }
 
-function decideMove(options, player, opp) {
-  console.log(options);
+function decideMove(options, board, player, opp) {
+  let move;
+  if (
+    options.aiDoubleCombos.length === 0 &&
+    options.opponentDoublecombos.length === 0 &&
+    options.aiSingleCombos.length === 0
+  ) {
+    console.log("no double combos");
+    if (
+      options.aiSingleCombos.length === 0 //&&
+      //options.opponentSinglecombos.length === 0
+    ) {
+      console.log("no single combos");
+      if (options.blankCombos.length > 1) {
+        if (board[shuffled[0]] === "") {
+          move = shuffled[0];
+        } else if (board[shuffled[1]] === "") {
+          move = shuffled[1];
+        } else if (board[shuffled[2]] === "") {
+          move = shuffled[2];
+        } else if (board[shuffled[3]] === "") {
+          move = shuffled[3];
+        }
+      }
+    }
+  }
+  return move;
 }
 
 function returnOptions(board, ai, opponent) {
