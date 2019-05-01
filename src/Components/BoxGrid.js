@@ -16,37 +16,33 @@ const BoxGrid = props => {
   useEffect(() => {
     if (props.type === "zero" && gameType !== "gameOver") {
       setUserMove(true);
-      if (totalSpaces.length >= 15) {
-        setGameType("gameOver");
-      } else if (totalSpaces.length < 15) {
-        setGameType("");
-      }
     }
-  }, [props.type]);
+  }, [gameType, props.type]);
 
   useEffect(() => {
     if (props.type === "zero" && gameType !== "gameOver") {
       setUserMove(true);
-      if (totalSpaces.length >= 15) {
-        setGameType("gameOver");
-      } else if (totalSpaces.length < 15) {
-        setGameType("");
-      }
     }
-  }, [userMove]);
+  }, [userMove, gameType, props.type]);
 
   useInterval(() => {
-    if (userMove) {
+    if (userMove && props.type === "zero") {
       setUserMove(false);
       makeAIMove();
+      checkForGameOver();
+    } else if (userMove && props.type === "single") {
+      makeAIMove();
+      checkForGameOver();
+      setUserMove(false);
     }
   }, 500);
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
 
   const checkForGameOver = () => {
-    if (totalSpaces.length >= 15) {
+    if (totalSpaces.length >= 16) {
       setGameType("gameOver");
+      setUserMove(false);
       dispatch({
         type: types.GAME_OVER
       });
@@ -61,7 +57,8 @@ const BoxGrid = props => {
         aiData: aiMove
       }
     });
-    checkForGameOver();
+    setUserMove(true);
+    //checkForGameOver();
   };
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
@@ -97,6 +94,7 @@ const BoxGrid = props => {
 
   const handleNewGame = () => {
     setGameType("");
+    setUserMove(false);
     dispatch({ type: types.CONTINUE });
   };
 

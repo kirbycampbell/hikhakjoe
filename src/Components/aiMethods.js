@@ -1,4 +1,9 @@
-import { winningCombos, highValueSpots, edgeSpots } from "../Data/WinCombos";
+import {
+  winningCombos,
+  highValueSpots,
+  edgeSpots,
+  allSpaces
+} from "../Data/WinCombos";
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //:::::::::::::General Functions (Shuffle, Count, & Sort Objects):::::::::
@@ -89,11 +94,13 @@ function decideMove(options, board, player, opp) {
   let move;
   let HV = shuffle(highValueSpots);
   let HVEdge = shuffle(edgeSpots);
+
   // IF GAME IS STARTING HEAD FOR CENTER SPOTS
   if (
     options.aiDoubleCombos.length === 0 &&
     options.opponentDoublecombos.length === 0 &&
-    options.aiSingleCombos.length === 0
+    options.aiSingleCombos.length === 0 &&
+    options.blankCombos.length > 5
   ) {
     console.log("Move 1");
     move = highValueMove(board, options, HV); // Shoot for center spots randomly
@@ -133,7 +140,15 @@ function decideMove(options, board, player, opp) {
   } else if (options.aiSingleCombos.length > 1) {
     console.log("buildCombo");
     move = goForPoints(board, options.aiDoubleCombos, options.aiSingleCombos);
+  } else {
+    console.log("ELSE");
+
+    let emptySpots = allSpaces.filter(spot => board[spot] === "");
+    console.log(emptySpots);
+    move = emptySpots[0];
   }
+  console.log("MOVE: ");
+  console.log(move);
   return move;
 }
 
