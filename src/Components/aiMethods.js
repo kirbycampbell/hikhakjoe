@@ -105,10 +105,18 @@ function decideMove(options, board, player, opp) {
     block = blockUserMove(board, options.opponentDoublecombos);
     move = block[0].key;
   } else if (
-    (options.aiDoubleCombos.length > options.opponentDoublecombos.length &&
-      options.opponentDoublecombos.length !== 0) ||
-    (options.aiDoubleCombos.length === options.opponentDoublecombos.length &&
-      options.aiDoubleCombos.length > 0) // If ai is about to win points
+    options.aiDoubleCombos.length === options.opponentDoublecombos.length &&
+    options.aiDoubleCombos.length > 0 // If ai is about to win points
+  ) {
+    console.log("Go for points Move 1");
+    move = goForPoints(
+      board,
+      options.opponentDoublecombos,
+      options.aiDoubleCombos
+    );
+  } else if (
+    options.aiDoubleCombos.length > options.opponentDoublecombos.length &&
+    options.opponentDoublecombos.length !== 0
   ) {
     console.log("Go for points & block");
     move = goForPointsOrBlock(
@@ -120,28 +128,16 @@ function decideMove(options, board, player, opp) {
     options.aiDoubleCombos.length > options.opponentDoublecombos.length &&
     options.opponentDoublecombos.length === 0
   ) {
-    console.log("GO FOR POINTS BB");
-    move = goForPoints(
-      board,
-      options.aiDoubleCombos,
-      options.aiSingleCombos,
-      HVEdge,
-      HV
-    );
+    console.log("GO FOR POINTS BB MOVE 2");
+    move = goForPoints(board, options.aiDoubleCombos, options.aiSingleCombos);
   } else if (options.aiSingleCombos.length > 1) {
     console.log("buildCombo");
-    move = goForPoints(
-      board,
-      options.aiDoubleCombos,
-      options.aiSingleCombos,
-      HVEdge,
-      HV
-    );
+    move = goForPoints(board, options.aiDoubleCombos, options.aiSingleCombos);
   }
   return move;
 }
 
-function goForPoints(board, aiDubCombos, aiSingCombos, HVEdge, HV) {
+function goForPoints(board, aiDubCombos, aiSingCombos) {
   let dubMoves = blockUserMove(board, aiDubCombos);
   let singMoves = blockUserMove(board, aiSingCombos);
   let moveArray = spreadObjToArray(singMoves, dubMoves);

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../context/StoreContext";
 import "../CSS/BoxGrid.css";
 import { types } from "../context/reducers";
@@ -8,22 +8,45 @@ import * as Methods from "./methods";
 import * as ai from "./aiMethods";
 import useInterval from "./useInterval";
 
-const BoxGrid = () => {
+const BoxGrid = props => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
   const { state, dispatch } = useContext(StoreContext);
   const [userMove, setUserMove] = useState(false);
+  const [gameType, setGameType] = useState("");
+  useEffect(() => {
+    if (props.type === "zero" && gameType !== "gameOver") {
+      setUserMove(true);
+      if (totalSpaces.length >= 15) {
+        setGameType("gameOver");
+      } else if (totalSpaces.length < 15) {
+        setGameType("");
+      }
+    }
+  }, [props.type]);
+
+  useEffect(() => {
+    if (props.type === "zero" && gameType !== "gameOver") {
+      setUserMove(true);
+      if (totalSpaces.length >= 15) {
+        setGameType("gameOver");
+      } else if (totalSpaces.length < 15) {
+        setGameType("");
+      }
+    }
+  }, [userMove]);
 
   useInterval(() => {
     if (userMove) {
       setUserMove(false);
       makeAIMove();
     }
-  }, 1000);
+  }, 500);
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
 
   const checkForGameOver = () => {
     if (totalSpaces.length >= 15) {
+      setGameType("gameOver");
       dispatch({
         type: types.GAME_OVER
       });
@@ -73,6 +96,7 @@ const BoxGrid = () => {
   };
 
   const handleNewGame = () => {
+    setGameType("");
     dispatch({ type: types.CONTINUE });
   };
 

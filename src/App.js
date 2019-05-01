@@ -23,7 +23,7 @@ function App() {
         <React.Fragment>
           <GamePoints />
           <div>{state.player}'s Turn</div>
-          <BoxGrid />
+          <BoxGrid type={state.gameType} />
           <OverallPoints
             p1Points={state.p1AllPoints}
             p2Points={state.p2AllPoints}
