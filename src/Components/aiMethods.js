@@ -37,6 +37,28 @@ function sortObject(obj) {
   });
   return arr; // returns array
 }
+
+// Turns 2 arrays of objects, into single array
+function spreadObjToArray(obj1, obj2) {
+  let i = 0;
+  let p = 0;
+  let array = [];
+  for (i = 0; i < obj2.length; i++) {
+    array.push(obj2[`${i}`].key);
+  }
+  for (p = 0; p < obj1.length; p++) {
+    array.push(obj1[`${p}`].key);
+  }
+  return array;
+}
+
+function returnEmptySpace(board) {
+  let emptySpace = board.filter(space => {
+    return space === "";
+  });
+  return emptySpace;
+}
+
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -51,7 +73,7 @@ export function Move(board, player) {
     opponent = "x";
   }
   const availableOptions = returnOptions(board, player, opponent);
-  console.log(availableOptions);
+  //console.log(availableOptions);
   const aiChosenMove = decideMove(availableOptions, board, player, opponent);
   const newBoard = tempNewBoard(board, aiChosenMove, player);
   const wins = checkWin(newBoard);
@@ -73,26 +95,72 @@ function decideMove(options, board, player, opp) {
     options.opponentDoublecombos.length === 0 &&
     options.aiSingleCombos.length === 0
   ) {
+    console.log("Move 1");
     move = highValueMove(board, options, HV); // Shoot for center spots randomly
   } else if (
     options.aiDoubleCombos.length < options.opponentDoublecombos.length // If Opponent is building a points move
   ) {
+    console.log("Move 2");
     let block; // Block User's points move
-    block = blockUserMove(board, options, options.opponentDoublecombos);
+    block = blockUserMove(board, options.opponentDoublecombos);
     move = block[0].key;
   } else if (
-    options.aiDoubleCombos.length > options.opponentDoublecombos.length ||
-    options.aiDoubleCombos.length === options.opponentDoublecombos.length // If ai is about to win points
+    (options.aiDoubleCombos.length > options.opponentDoublecombos.length &&
+      options.opponentDoublecombos.length !== 0) ||
+    (options.aiDoubleCombos.length === options.opponentDoublecombos.length &&
+      options.aiDoubleCombos.length > 0) // If ai is about to win points
   ) {
     console.log("Go for points & block");
+    move = goForPointsOrBlock(
+      board,
+      options.opponentDoublecombos,
+      options.aiDoubleCombos
+    );
+  } else if (
+    options.aiDoubleCombos.length > options.opponentDoublecombos.length &&
+    options.opponentDoublecombos.length === 0
+  ) {
+    console.log("GO FOR POINTS BB");
+    move = goForPoints(
+      board,
+      options.aiDoubleCombos,
+      options.aiSingleCombos,
+      HVEdge,
+      HV
+    );
   } else if (options.aiSingleCombos.length > 1) {
-    console.log("go for combo ai");
+    console.log("buildCombo");
+    move = goForPoints(
+      board,
+      options.aiDoubleCombos,
+      options.aiSingleCombos,
+      HVEdge,
+      HV
+    );
+  }
+  return move;
+}
+
+function goForPoints(board, aiDubCombos, aiSingCombos, HVEdge, HV) {
+  let dubMoves = blockUserMove(board, aiDubCombos);
+  let singMoves = blockUserMove(board, aiSingCombos);
+  let moveArray = spreadObjToArray(singMoves, dubMoves);
+  let move;
+  console.log(moveArray);
+  if (dubMoves.length === 1) {
+    move = dubMoves[0].key;
+  } else if (dubMoves.length > 1) {
+    move = dubMoves[1].key;
+  } else if (dubMoves.length === 0 && singMoves.length > 0) {
+    move = singMoves[0].key;
+  } else {
+    move = returnEmptySpace(board);
   }
   return move;
 }
 
 // Block User Move by searching combos for most important block location
-function blockUserMove(board, options, playerCombos) {
+function blockUserMove(board, playerCombos) {
   let spacesToBlock = [];
   // Map Through opponentDoubleCombos
   playerCombos.map(combo => {
@@ -110,8 +178,20 @@ function blockUserMove(board, options, playerCombos) {
   return weightedCounts; // First item will be most important spot
 }
 // ::::::::::::::: Go For Points Or Block ::::::::::::::::::::::::::::::::::
-function goForPointsOrBlock(board, options) {
-  let block = blockUserMove(board, options); // uses above method
+function goForPointsOrBlock(board, playerCombos, aiCombos) {
+  let block = blockUserMove(board, playerCombos); // uses above method
+  let moves = blockUserMove(board, aiCombos);
+  let chosenMove;
+  console.log(block);
+  console.log(moves);
+  if (block[0].value > moves[0].value) {
+    chosenMove = block[0].key;
+  } else if (moves[0].value > block[0].value) {
+    chosenMove = moves[0].key;
+  } else if (block[0].value === moves[0].value) {
+    chosenMove = block[0].key;
+  }
+  return chosenMove;
 }
 
 // :::::::::: Function Returns Random position in the center of the game :::::::::::::::::::::::

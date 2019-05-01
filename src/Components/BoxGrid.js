@@ -38,6 +38,7 @@ const BoxGrid = () => {
         aiData: aiMove
       }
     });
+    checkForGameOver();
   };
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
