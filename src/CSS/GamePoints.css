@@ -6,8 +6,13 @@
   height: 100px;
   margin: auto;
   background: rgba(54, 180, 149, 0.521);
-
   padding-top: 10px;
+  box-shadow: 3px 3px 5px 6px rgba(24, 24, 44, 0.208);
+  transition: box-shadow 1s;
+}
+.upper-container:hover {
+  box-shadow: 5px 6px 8px 10px rgba(24, 24, 44, 0.308);
+  transition: box-shadow 1s;
 }
 
 .game-point {
@@ -36,10 +41,38 @@
 
 .num {
   display: flex;
+  width: 50px;
   font-size: 26px;
   border-radius: 8px;
   margin-left: 7px;
-  background: yellow;
+  background: rgba(255, 255, 0, 0.714);
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: font-size 1s;
+}
+
+.points.big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+  float: left;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(109, 0, 0);
+  transition: font-size 1s;
+}
+
+.num-big.big {
+  display: flex;
+  width: 50px;
+  font-size: 26px;
+  border-radius: 8px;
+  margin-left: 7px;
+  background: rgba(255, 255, 0, 0.714);
   padding: 3px;
   align-items: center;
   justify-content: center;

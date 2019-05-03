@@ -61,7 +61,6 @@ const reducer = (state = initialState, action) => {
       });
     // *********** AI MOVE :::::::::::::::::::::::::::::::::::::::::::
     case types.MAKE_AI_MOVE:
-      //console.log(action.payload);
       let newBoardAI = action.payload.aiData.newBoard;
       const human1 = action.payload.aiData.wins.xWins.length * 36;
       const comp2 = action.payload.aiData.wins.oWins.length * 36;
@@ -95,14 +94,6 @@ const reducer = (state = initialState, action) => {
         endGame: false,
         playerTurn: state.playerTurn + 1
       });
-    // POINTS - keeps track of points each user scores
-    // case types.POINTS:
-    //   const p1 = action.payload.allPoints.xWins.length * 36;
-    //   const p2 = action.payload.allPoints.oWins.length * 36;
-    //   return Object.assign({}, state, {
-    //     p1Points: p1,
-    //     p2Points: p2
-    //   });
     // GAME_OVER - when single game is over - adds games points to total points
     case types.GAME_OVER:
       const endP1Points = state.p1AllPoints;
