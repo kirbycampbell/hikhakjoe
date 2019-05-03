@@ -53,6 +53,42 @@
   transition: font-size 1s;
 }
 
+.showScore-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.showScore-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.showScore-exit {
+  opacity: 1;
+}
+.showScore-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.showPoints-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.showPoints-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.showPoints-exit {
+  opacity: 1;
+}
+.showPoints-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
 .points.big {
   display: flex;
   align-items: center;
