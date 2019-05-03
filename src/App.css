@@ -17,6 +17,12 @@
   width: 100%;
 }
 
+.player-turn {
+  font-size: 40px;
+  margin: 10px 0;
+  color: rgb(251, 255, 0);
+}
+
 .reset-btn {
   border: none;
   width: 300px;

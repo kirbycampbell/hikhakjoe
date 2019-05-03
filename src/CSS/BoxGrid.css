@@ -1,7 +1,8 @@
 .box-container {
   display: flex;
   height: 60%;
-  width: 86%;
+  width: 98%;
+  box-shadow: 10px 10px 10px 10px rgba(255, 0, 191, 0.11);
   max-width: 1000px;
   max-height: 900px;
   align-items: center;
