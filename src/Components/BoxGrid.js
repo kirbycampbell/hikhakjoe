@@ -147,9 +147,11 @@ const BoxGrid = props => {
           <div className="points-game-over">
             <div className="point-title">
               <OverallWinner />
-              <div className="new-game" onClick={props.resetGame}>
-                Reset
-              </div>
+            </div>
+          </div>
+          <div className="end-button-container">
+            <div className="new-game" onClick={props.resetGame}>
+              Reset
             </div>
           </div>
         </div>
