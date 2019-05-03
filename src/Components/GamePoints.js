@@ -20,58 +20,40 @@ const GamePoints = () => {
   useEffect(() => {
     setPointsChangeP1(false);
     setPointsChangeP2(false);
-  }, [pointsChangeP1, pointsChangeP2]);
+  }, []);
 
-  // useInterval(
-  //   () => {
-  //     if (pointsChangeP1) {
-  //       setPointsChangeP1(false);
-  //     } else if (pointsChangeP2) {
-  //       setPointsChangeP2(false);
-  //     }
-  //   },
-  //   [pointsChangeP1 ? 2000 : null],
-  //   [pointsChangeP2 ? 2000 : null]
-  // );
+  useInterval(() => {
+    if (pointsChangeP1) {
+      setPointsChangeP1(false);
+    }
+  }, [pointsChangeP1 ? 2000 : null]);
+
+  useInterval(() => {
+    if (pointsChangeP2) {
+      setPointsChangeP2(false);
+    }
+  }, [pointsChangeP2 ? 2000 : null]);
 
   return (
     <div className="upper-container">
       <div className="game-point">Game Points:</div>
-      <CSSTransition
-        in={pointsChangeP1}
-        timeout={2000}
-        classNames="showScore"
-        unmountOnExit
-        onEnter={() => setPointsChangeP1(true)}
-        onExited={() => setPointsChangeP1(false)}
-      >
-        <div className="points big">
-          P1 Scores! <div className="num big">{state.p1Points}</div>
-        </div>
-      </CSSTransition>
-      <CSSTransition
-        in={!pointsChangeP1}
-        timeout={2000}
-        classNames="showPoints"
-        unmountOnExit
-      >
-        <div className="points">
+      {!pointsChangeP1 && (
+        <div className="animated fadeIn points ">
           P1 Points: <div className="num">{state.p1Points}</div>
         </div>
-      </CSSTransition>
-
-      {/* {!pointsChangeP1 && (
-        <div className="points big">
-          P1 Score: <div className="num">{state.p1Points}</div>
+      )}
+      {pointsChangeP1 && (
+        <div className="animated tada points big">
+          P1 Scores! <div className="num big">{state.p1Points}</div>
         </div>
-      )} */}
+      )}
       {!pointsChangeP2 && (
-        <div className="points">
+        <div className="animated fadeIn points">
           P2 Points: <div className="num">{state.p2Points}</div>
         </div>
       )}
       {pointsChangeP2 && (
-        <div className="points big">
+        <div className="animated tada points big">
           P2 Scores! <div className="num big">{state.p2Points}</div>
         </div>
       )}
