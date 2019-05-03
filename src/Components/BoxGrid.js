@@ -13,39 +13,56 @@ const BoxGrid = props => {
   const { state, dispatch } = useContext(StoreContext);
   const [userMove, setUserMove] = useState(false);
   const [gameType, setGameType] = useState("");
+  const [endGameTimer, setEndGameTimer] = useState(false);
+
   useEffect(() => {
     if (props.type === "zero" && gameType !== "gameOver") {
       setUserMove(true);
+      setEndGameTimer(false);
     }
   }, [gameType, props.type]);
 
-  useEffect(() => {
-    if (props.type === "zero" && gameType !== "gameOver") {
-      setUserMove(true);
-    }
-  }, [userMove, gameType, props.type]);
-
   useInterval(() => {
-    if (userMove && props.type === "zero") {
+    if (userMove && props.type === "zero" && !checkForGameOver()) {
       setUserMove(false);
       makeAIMove();
-      checkForGameOver();
-    } else if (userMove && props.type === "single") {
+      setEndGameTimer(false);
+    } else if (userMove && props.type === "single" && !checkForGameOver()) {
       makeAIMove();
-      checkForGameOver();
+      setEndGameTimer(false);
       setUserMove(false);
+    } else if (userMove && props.type === "duel" && !checkForGameOver()) {
+      setEndGameTimer(false);
+      setUserMove(false);
+    } else if (checkForGameOver()) {
+      checkForGameOver();
     }
   }, 500);
+
   //totalSpaces is assigned the array of player placements to be used as a .length useEffect check
   const totalSpaces = state.gameBoard.filter(space => space !== "");
 
+  useInterval(
+    () => {
+      if (endGameTimer) {
+        setGameType("gameOver");
+        setUserMove(false);
+        setEndGameTimer(false);
+        dispatch({
+          type: types.GAME_OVER
+        });
+      }
+    },
+    1000,
+    [endGameTimer]
+  );
+
   const checkForGameOver = () => {
     if (totalSpaces.length >= 16) {
-      setGameType("gameOver");
-      setUserMove(false);
-      dispatch({
-        type: types.GAME_OVER
-      });
+      setEndGameTimer(true);
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -58,7 +75,6 @@ const BoxGrid = props => {
       }
     });
     setUserMove(true);
-    //checkForGameOver();
   };
 
   // :::::::::::::: When a user clicks a box :::::::::::::::::::::::::
@@ -89,7 +105,6 @@ const BoxGrid = props => {
         console.log("not your turn");
       }
     }
-    checkForGameOver();
   };
 
   const handleNewGame = () => {

@@ -100,6 +100,7 @@ const reducer = (state = initialState, action) => {
       const endP2Points = state.p2AllPoints;
       console.log("GAME OVER CALLED");
       return Object.assign({}, state, {
+        gameBoard: Array(16).fill(""),
         winner: true,
         p1AllPoints: state.p1Points + endP1Points,
         p2AllPoints: state.p2Points + endP2Points

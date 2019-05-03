@@ -9,11 +9,15 @@ const GamePoints = () => {
   const [pointsChangeP2, setPointsChangeP2] = useState(false);
 
   useEffect(() => {
-    setPointsChangeP1(true);
+    if (state.p1Points !== 0) {
+      setPointsChangeP1(true);
+    }
   }, [state.p1Points]);
 
   useEffect(() => {
-    setPointsChangeP2(true);
+    if (state.p2Points !== 0) {
+      setPointsChangeP2(true);
+    }
   }, [state.p2Points]);
 
   useEffect(() => {

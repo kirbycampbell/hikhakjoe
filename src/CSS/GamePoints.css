@@ -42,6 +42,7 @@
 
 .player-turn {
   display: flex;
+  font-weight: bold;
   right: 0;
   position: absolute;
   font-size: 30px;
@@ -49,7 +50,7 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  color: rgb(251, 255, 0);
+  color: rgb(255, 255, 255);
 }
 
 .num {
