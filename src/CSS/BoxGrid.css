@@ -5,6 +5,7 @@
   box-shadow: 10px 10px 10px 10px rgba(255, 0, 191, 0.11);
   max-width: 1000px;
   max-height: 900px;
+  min-height: 400px;
   align-items: center;
   justify-content: center;
   background: rgba(13, 111, 202, 0.5);

@@ -14,25 +14,24 @@ function App() {
   };
   return (
     <div className="App">
-      <div className="title">Hik Hak Joe</div>
-      {/*:::::::::::: HOME GAME TYPE SELECT SECTION :::::::::::::::::::::::::: */}
-      {state.gameType === "ask" && <GameSelect />}
+      <div className="App-inner">
+        <div className="title">Hik Hak Joe</div>
+        {/*:::::::::::: HOME GAME TYPE SELECT SECTION :::::::::::::::::::::::::: */}
+        {state.gameType === "ask" && <GameSelect />}
 
-      {/*:::::::::::: MAIN GAME SECTION :::::::::::::::::::::::::: */}
-      {state.gameType !== "ask" && (
-        <React.Fragment>
-          <GamePoints />
+        {/*:::::::::::: MAIN GAME SECTION :::::::::::::::::::::::::: */}
+        {state.gameType !== "ask" && (
+          <React.Fragment>
+            <GamePoints />
 
-          <BoxGrid type={state.gameType} />
-          <OverallPoints
-            p1Points={state.p1AllPoints}
-            p2Points={state.p2AllPoints}
-          />
-          <button className="reset-btn" onClick={resetGame}>
-            Reset
-          </button>
-        </React.Fragment>
-      )}
+            <BoxGrid type={state.gameType} resetGame={resetGame} />
+            <OverallPoints
+              p1Points={state.p1AllPoints}
+              p2Points={state.p2AllPoints}
+            />
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 }

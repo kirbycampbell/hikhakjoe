@@ -93,3 +93,85 @@
   text-align: center;
   padding-bottom: 10px;
 }
+
+@media only screen and (max-width: 700px) {
+  .upper-container {
+    height: 110px;
+    margin-bottom: 20px;
+  }
+  .upper-container:hover {
+    box-shadow: 5px 6px 8px 10px rgba(24, 24, 44, 0.308);
+    transition: box-shadow 1s;
+  }
+
+  .player-turn {
+    display: flex;
+    font-weight: bold;
+    right: 0;
+    position: absolute;
+    font-size: 26px;
+    margin-top: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    color: rgb(255, 255, 255);
+  }
+
+  .game-point {
+    font-size: 24px;
+  }
+
+  .points {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(109, 0, 0);
+  }
+
+  .num {
+    display: flex;
+    width: 50px;
+    font-size: 22px;
+    border-radius: 8px;
+    margin-left: 7px;
+    background: rgba(255, 255, 0, 0.714);
+    padding: 3px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .points.big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(109, 0, 0);
+
+    padding-bottom: 10px;
+  }
+
+  .num-big.big {
+    display: flex;
+    width: 50px;
+    font-size: 22px;
+    border-radius: 8px;
+    margin-left: 7px;
+    background: rgba(255, 255, 0, 0.714);
+    padding: 3px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+}
