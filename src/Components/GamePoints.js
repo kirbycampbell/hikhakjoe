@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../context/StoreContext";
 import useInterval from "./useInterval";
-import { CSSTransition } from "react-transition-group";
 import "../CSS/GamePoints.css";
 
 const GamePoints = () => {
@@ -26,13 +25,13 @@ const GamePoints = () => {
     if (pointsChangeP1) {
       setPointsChangeP1(false);
     }
-  }, [pointsChangeP1 ? 2000 : null]);
+  }, [pointsChangeP1 ? 1300 : null]);
 
   useInterval(() => {
     if (pointsChangeP2) {
       setPointsChangeP2(false);
     }
-  }, [pointsChangeP2 ? 2000 : null]);
+  }, [pointsChangeP2 ? 1300 : null]);
 
   return (
     <div className="upper-container">
@@ -47,6 +46,7 @@ const GamePoints = () => {
           P1 Scores! <div className="num big">{state.p1Points}</div>
         </div>
       )}
+      <div className="player-turn">{state.player}'s Turn</div>
       {!pointsChangeP2 && (
         <div className="animated fadeIn points">
           P2 Points: <div className="num">{state.p2Points}</div>

@@ -9,6 +9,7 @@
   padding-top: 10px;
   box-shadow: 3px 3px 5px 6px rgba(24, 24, 44, 0.208);
   transition: box-shadow 1s;
+  margin-bottom: 30px;
 }
 .upper-container:hover {
   box-shadow: 5px 6px 8px 10px rgba(24, 24, 44, 0.308);
@@ -39,6 +40,18 @@
   color: rgb(109, 0, 0);
 }
 
+.player-turn {
+  display: flex;
+  right: 0;
+  position: absolute;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  color: rgb(251, 255, 0);
+}
+
 .num {
   display: flex;
   width: 50px;
@@ -50,43 +63,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: font-size 1s;
-}
-
-.showScore-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-.showScore-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
-.showScore-exit {
-  opacity: 1;
-}
-.showScore-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.showPoints-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-.showPoints-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
-.showPoints-exit {
-  opacity: 1;
-}
-.showPoints-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
 }
 
 .points.big {
@@ -99,7 +75,8 @@
   font-size: 30px;
   font-weight: bold;
   color: rgb(109, 0, 0);
-  transition: font-size 1s;
+
+  padding-bottom: 10px;
 }
 
 .num-big.big {
@@ -113,4 +90,5 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding-bottom: 10px;
 }
