@@ -10,7 +10,8 @@ const initialState = {
   endGame: false,
   gameType: "ask",
   ai1: false,
-  ai2: false
+  ai2: false,
+  difficulty: "hard"
 };
 
 const types = {

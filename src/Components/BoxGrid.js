@@ -7,6 +7,7 @@ import { WinnerPerson, OverallWinner } from "./Winners";
 import * as Methods from "./methods";
 import * as ai from "./aiMethods";
 import useInterval from "./useInterval";
+import { MoveHard } from "./aiMethodsHard";
 
 const BoxGrid = props => {
   // ::::::::::: HOOKS SET UP AREA :::::::::::::::::::::::::::::::::::::::::::
@@ -67,7 +68,13 @@ const BoxGrid = props => {
   };
 
   const makeAIMove = () => {
-    let aiMove = ai.Move(state.gameBoard, state.player);
+    let aiMove;
+    if (state.difficulty === "easy") {
+      aiMove = ai.Move(state.gameBoard, state.player);
+    } else if (state.difficulty === "hard") {
+      aiMove = MoveHard(state.gameBoard, state.player);
+    }
+
     dispatch({
       type: types.MAKE_AI_MOVE,
       payload: {
