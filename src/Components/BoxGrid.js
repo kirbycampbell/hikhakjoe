@@ -157,7 +157,11 @@ const BoxGrid = props => {
         />
       )}
       {boardView && (
-        <PostGameBoxes board={state.gameBoard} showBoard={showBoard} />
+        <PostGameBoxes
+          board={state.gameBoard}
+          showBoard={showBoard}
+          moveOrder={state.moveOrder}
+        />
       )}
       {state.winner && !boardView && (
         <div className="game-over-container">

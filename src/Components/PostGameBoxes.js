@@ -2,6 +2,8 @@ import React from "react";
 import "../CSS/InnerBoxes.css";
 
 const PostGameBoxes = props => {
+  // [10, 6, 5, 9, 15, 0, 14, 13, 12, 3, 4, 1, 8, 2, 11, 7]
+  console.log(props.moveOrder);
   return (
     <div className="game-box" onClick={props.showBoard}>
       <div className="row-container">
