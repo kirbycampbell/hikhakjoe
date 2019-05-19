@@ -94,20 +94,23 @@ function decideMove(options, board, player, opp) {
   let move;
   let HV = shuffle(highValueSpots);
   let HVEdge = shuffle(edgeSpots);
+  let highValueTest = highValueMove(board, options, HV);
 
   // IF GAME IS STARTING HEAD FOR CENTER SPOTS
   if (
-    options.aiDoubleCombos.length === 0 &&
-    options.opponentDoublecombos.length === 0 &&
-    options.aiSingleCombos.length === 0 &&
-    options.blankCombos.length > 5
+    highValueTest > 0 ||
+    (options.aiDoubleCombos.length === 0 &&
+      options.opponentDoublecombos.length === 0 &&
+      options.aiSingleCombos.length === 0 &&
+      options.blankCombos.length > 5)
   ) {
-    console.log("Move 1");
+    console.log("GOING FOR CENTER");
     move = highValueMove(board, options, HV); // Shoot for center spots randomly
   } else if (
-    options.aiDoubleCombos.length < options.opponentDoublecombos.length // If Opponent is building a points move
+    options.aiDoubleCombos.length < options.opponentDoublecombos.length &&
+    options.opponentDoublecombos.length > 1 // If Opponent is building a points move
   ) {
-    console.log("Move 2");
+    console.log("BLOCK MOVE");
     let block; // Block User's points move
     block = blockUserMove(board, options.opponentDoublecombos);
     move = block[0].key;
@@ -115,7 +118,7 @@ function decideMove(options, board, player, opp) {
     options.aiDoubleCombos.length === options.opponentDoublecombos.length &&
     options.aiDoubleCombos.length > 0 // If ai is about to win points
   ) {
-    console.log("Go for points Move 1");
+    console.log("Go for points");
     move = goForPoints(
       board,
       options.opponentDoublecombos,
