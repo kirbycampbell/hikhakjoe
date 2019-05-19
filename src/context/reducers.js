@@ -11,7 +11,7 @@ const initialState = {
   gameType: "ask",
   ai1: false,
   ai2: false,
-  difficulty: "hard"
+  difficulty: "easy"
 };
 
 const types = {
@@ -24,7 +24,8 @@ const types = {
   START_GAME: "START_GAME",
   GAME_TYPE: "GAME_TYPE",
   CONTINUE: "CONTINUE",
-  MAKE_AI_MOVE: "MAKE_AI_MOVE"
+  MAKE_AI_MOVE: "MAKE_AI_MOVE",
+  SET_DIFFICULTY: "SET_DIFFICULTY"
 };
 
 const reducer = (state = initialState, action) => {
@@ -72,6 +73,12 @@ const reducer = (state = initialState, action) => {
         p1Points: human1,
         p2Points: comp2,
         ai1: false
+      });
+    // *********** AI DIFFICULTY SET :::::::::::::::::::::::::::::::::::::::::::
+    case types.SET_DIFFICULTY:
+      const diff = action.payload.difficulty;
+      return Object.assign({}, state, {
+        difficulty: diff
       });
     // RESET_GAME - resets all global state and returns view to home GAME SELECT
     case types.RESET_GAME:

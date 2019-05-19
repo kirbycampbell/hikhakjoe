@@ -9,7 +9,7 @@
   padding-top: 10px;
   box-shadow: 3px 3px 5px 6px rgba(24, 24, 44, 0.208);
   transition: box-shadow 1s;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 .upper-container:hover {
   box-shadow: 5px 6px 8px 10px rgba(24, 24, 44, 0.308);

@@ -6,6 +6,7 @@ import BoxGrid from "./Components/BoxGrid";
 import GamePoints from "./Components/GamePoints";
 import OverallPoints from "./Components/OverallPoints";
 import GameSelect from "./Components/GameSelect";
+import Difficulty from "./Components/Difficulty";
 
 function App() {
   const { state, dispatch } = useContext(StoreContext);
@@ -14,8 +15,8 @@ function App() {
   };
   return (
     <div className="App">
+      <div className="title">Hik Hak Joe</div>
       <div className="App-inner">
-        <div className="title">Hik Hak Joe</div>
         {/*:::::::::::: HOME GAME TYPE SELECT SECTION :::::::::::::::::::::::::: */}
         {state.gameType === "ask" && <GameSelect />}
 
@@ -23,7 +24,7 @@ function App() {
         {state.gameType !== "ask" && (
           <React.Fragment>
             <GamePoints />
-
+            <Difficulty />
             <BoxGrid type={state.gameType} resetGame={resetGame} />
             <OverallPoints
               p1Points={state.p1AllPoints}
@@ -32,6 +33,7 @@ function App() {
           </React.Fragment>
         )}
       </div>
+      <div className="footer">Footer</div>
     </div>
   );
 }

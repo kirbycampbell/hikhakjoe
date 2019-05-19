@@ -3,7 +3,6 @@ html {
   scroll-snap-type: y mandatory;
 }
 body {
-  background: rgba(143, 128, 196, 0.5);
   margin: 0;
   padding: 0;
 
