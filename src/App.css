@@ -8,7 +8,7 @@
 }
 .App-inner {
   text-align: center;
-  height: 83vh;
+  height: 84.5vh;
   width: 100%;
   max-width: 1100px;
   margin: auto;
@@ -30,9 +30,13 @@
 .footer {
   width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
-  height: 100px;
-  background: blue;
+  height: 60px;
+  background: rgba(3, 3, 37, 0.486);
+  color: white;
 }
 
 .reset-btn {

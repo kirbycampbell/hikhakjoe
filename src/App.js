@@ -33,7 +33,7 @@ function App() {
           </React.Fragment>
         )}
       </div>
-      <div className="footer">Footer</div>
+      <div className="footer">Made with Love by Kirby Campbell</div>
     </div>
   );
 }
