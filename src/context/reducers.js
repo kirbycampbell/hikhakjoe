@@ -2,6 +2,7 @@ const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   moveOrder: [],
   allGames: [],
+  allBoards: [],
   nextPlayer: "o",
   player: "x",
   p1Points: 0,
@@ -108,6 +109,7 @@ const reducer = (state = initialState, action) => {
     // CONTINUE - adds the points into overall and plays another game
     case types.CONTINUE:
       let newAllGames = [...state.allGames, state.moveOrder];
+      let newAllBoards = [...state.allBoards, state.gameBoard];
       return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
         winner: false,
@@ -117,7 +119,8 @@ const reducer = (state = initialState, action) => {
         playerTurn: state.playerTurn + 1,
         pause: false,
         allGames: newAllGames,
-        moveOrder: []
+        moveOrder: [],
+        allBoards: newAllBoards
       });
     // GAME_OVER - when single game is over - adds games points to total points
     case types.GAME_OVER:
