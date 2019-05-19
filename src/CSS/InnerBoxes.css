@@ -3,8 +3,20 @@
   height: 80%;
   width: 80%;
   grid-template-rows: 25% 25% 25% 25%;
-  /* align-items: center;
-      justify-content: center; */
+}
+.invalid-move {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin-top: 14%;
+  margin-left: 26%;
+  width: 20%;
+  height: 40px;
+  color: white;
+  background: rgba(255, 0, 0, 0.644);
+  border-radius: 30px;
+  opacity: 0.5;
 }
 .row-container {
   width: 100%;

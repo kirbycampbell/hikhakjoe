@@ -1,16 +1,12 @@
 import React from "react";
 import "../CSS/InnerBoxes.css";
 
-const InnerBoxes = props => {
+const PostGameBoxes = props => {
   return (
-    <div className="game-box">
-      {props.invalidMove && <div className="invalid-move">Invalid Move</div>}
+    <div className="game-box" onClick={props.showBoard}>
       <div className="row-container">
         <div className="row">
-          <div
-            className="row-item row-itemL"
-            onClick={() => props.handleBoxClick(0)}
-          >
+          <div className="row-item row-itemL">
             {props.board[0] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -18,7 +14,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(1)}>
+          <div className="row-item">
             {props.board[1] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -26,7 +22,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(2)}>
+          <div className="row-item">
             {props.board[2] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -34,7 +30,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(3)}>
+          <div className="row-item">
             {props.board[3] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -46,10 +42,7 @@ const InnerBoxes = props => {
       </div>
       <div className="row-container">
         <div className="row">
-          <div
-            className="row-item row-itemL"
-            onClick={() => props.handleBoxClick(4)}
-          >
+          <div className="row-item row-itemL">
             {props.board[4] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -57,7 +50,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(5)}>
+          <div className="row-item">
             {props.board[5] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -65,7 +58,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(6)}>
+          <div className="row-item">
             {props.board[6] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -73,7 +66,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(7)}>
+          <div className="row-item">
             {props.board[7] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -85,10 +78,7 @@ const InnerBoxes = props => {
       </div>
       <div className="row-container">
         <div className="row">
-          <div
-            className="row-item row-itemL"
-            onClick={() => props.handleBoxClick(8)}
-          >
+          <div className="row-item row-itemL">
             {props.board[8] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -96,7 +86,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(9)}>
+          <div className="row-item">
             {props.board[9] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -104,7 +94,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(10)}>
+          <div className="row-item">
             {props.board[10] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -112,7 +102,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div className="row-item" onClick={() => props.handleBoxClick(11)}>
+          <div className="row-item">
             {props.board[11] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -124,10 +114,7 @@ const InnerBoxes = props => {
       </div>
       <div className="row-container">
         <div className="row">
-          <div
-            className="row-item row-itemL row-itemB"
-            onClick={() => props.handleBoxClick(12)}
-          >
+          <div className="row-item row-itemL row-itemB">
             {props.board[12] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -135,10 +122,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div
-            className="row-item row-itemB"
-            onClick={() => props.handleBoxClick(13)}
-          >
+          <div className="row-item row-itemB">
             {props.board[13] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -146,10 +130,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div
-            className="row-item row-itemB"
-            onClick={() => props.handleBoxClick(14)}
-          >
+          <div className="row-item row-itemB">
             {props.board[14] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -157,10 +138,7 @@ const InnerBoxes = props => {
               <i className="far fa-dot-circle game-piece" />
             )}
           </div>
-          <div
-            className="row-item row-itemB"
-            onClick={() => props.handleBoxClick(15)}
-          >
+          <div className="row-item row-itemB">
             {props.board[15] === "x" && (
               <i className="fas fa-times game-piece" />
             )}
@@ -174,4 +152,4 @@ const InnerBoxes = props => {
   );
 };
 
-export default InnerBoxes;
+export default PostGameBoxes;

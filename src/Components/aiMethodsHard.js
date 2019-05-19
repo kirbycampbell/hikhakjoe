@@ -82,7 +82,8 @@ export function MoveHard(board, player) {
   const aiChosenMove = decideMove(availableOptions, board, player, opponent);
   const newBoard = tempNewBoard(board, aiChosenMove, player);
   const wins = checkWin(newBoard);
-  return { newBoard, wins };
+  let intMove = parseInt(aiChosenMove);
+  return { newBoard, wins, intMove };
 }
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -108,7 +109,7 @@ function decideMove(options, board, player, opp) {
     move = highValueMove(board, options, HV); // Shoot for center spots randomly
   } else if (
     options.aiDoubleCombos.length < options.opponentDoublecombos.length &&
-    options.opponentDoublecombos.length > 1 // If Opponent is building a points move
+    options.opponentDoublecombos.length > 2 // If Opponent is building a points move
   ) {
     console.log("BLOCK MOVE");
     let block; // Block User's points move

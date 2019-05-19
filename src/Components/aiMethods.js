@@ -82,7 +82,8 @@ export function Move(board, player) {
   const aiChosenMove = decideMove(availableOptions, board, player, opponent);
   const newBoard = tempNewBoard(board, aiChosenMove, player);
   const wins = checkWin(newBoard);
-  return { newBoard, wins };
+  let intMove = parseInt(aiChosenMove);
+  return { newBoard, wins, intMove };
 }
 
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

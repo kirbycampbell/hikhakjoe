@@ -1,5 +1,7 @@
 const initialState = {
   gameBoard: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+  moveOrder: [],
+  allGames: [],
   nextPlayer: "o",
   player: "x",
   p1Points: 0,
@@ -11,7 +13,8 @@ const initialState = {
   gameType: "ask",
   ai1: false,
   ai2: false,
-  difficulty: "hard"
+  difficulty: "hard",
+  pause: false
 };
 
 const types = {
@@ -25,7 +28,8 @@ const types = {
   GAME_TYPE: "GAME_TYPE",
   CONTINUE: "CONTINUE",
   MAKE_AI_MOVE: "MAKE_AI_MOVE",
-  SET_DIFFICULTY: "SET_DIFFICULTY"
+  SET_DIFFICULTY: "SET_DIFFICULTY",
+  PAUSE: "PAUSE"
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,38 +45,47 @@ const reducer = (state = initialState, action) => {
       let newBoard = action.payload.gameData.newBoard;
       const p1 = action.payload.gameData.wins.xWins.length * 36;
       const p2 = action.payload.gameData.wins.oWins.length * 36;
+      let gameMoveOrderA = state.moveOrder;
+      gameMoveOrderA.push(action.payload.newMove);
       return Object.assign({}, state, {
         gameBoard: newBoard,
         player: state.nextPlayer,
         nextPlayer: state.player,
         p1Points: p1,
-        p2Points: p2
+        p2Points: p2,
+        moveOrder: gameMoveOrderA
       });
     //:::: MAKE_MOVE_B - makes the selected move on the board :::::::
     case types.MAKE_MOVE_B:
       let newBoardB = action.payload.gameData.newBoard;
       const human = action.payload.gameData.wins.xWins.length * 36;
       const comp = action.payload.gameData.wins.oWins.length * 36;
+      let gameMoveOrderB = state.moveOrder;
+      gameMoveOrderB.push(action.payload.newMove);
       return Object.assign({}, state, {
         gameBoard: newBoardB,
         player: state.nextPlayer,
         nextPlayer: state.player,
         p1Points: human,
         p2Points: comp,
-        ai1: true
+        ai1: true,
+        moveOrder: gameMoveOrderB
       });
     // *********** AI MOVE :::::::::::::::::::::::::::::::::::::::::::
     case types.MAKE_AI_MOVE:
       let newBoardAI = action.payload.aiData.newBoard;
       const human1 = action.payload.aiData.wins.xWins.length * 36;
       const comp2 = action.payload.aiData.wins.oWins.length * 36;
+      let gameMoves = state.moveOrder;
+      gameMoves.push(action.payload.aiData.intMove);
       return Object.assign({}, state, {
         gameBoard: newBoardAI,
         player: state.nextPlayer,
         nextPlayer: state.player,
         p1Points: human1,
         p2Points: comp2,
-        ai1: false
+        ai1: false,
+        moveOrder: gameMoves
       });
     // *********** AI DIFFICULTY SET :::::::::::::::::::::::::::::::::::::::::::
     case types.SET_DIFFICULTY:
@@ -94,13 +107,17 @@ const reducer = (state = initialState, action) => {
       });
     // CONTINUE - adds the points into overall and plays another game
     case types.CONTINUE:
+      let newAllGames = [...state.allGames, state.moveOrder];
       return Object.assign({}, state, {
         gameBoard: Array(16).fill(""),
         winner: false,
         p1Points: 0,
         p2Points: 0,
         endGame: false,
-        playerTurn: state.playerTurn + 1
+        playerTurn: state.playerTurn + 1,
+        pause: false,
+        allGames: newAllGames,
+        moveOrder: []
       });
     // GAME_OVER - when single game is over - adds games points to total points
     case types.GAME_OVER:
@@ -108,10 +125,10 @@ const reducer = (state = initialState, action) => {
       const endP2Points = state.p2AllPoints;
       console.log("GAME OVER CALLED");
       return Object.assign({}, state, {
-        gameBoard: Array(16).fill(""),
         winner: true,
         p1AllPoints: state.p1Points + endP1Points,
-        p2AllPoints: state.p2Points + endP2Points
+        p2AllPoints: state.p2Points + endP2Points,
+        pause: true
       });
     // FINISH - when user is clicks END (done playing games) this shows the overall winner message
     case types.FINISH:
