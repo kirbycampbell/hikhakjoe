@@ -14,7 +14,7 @@ const initialState = {
   gameType: "ask",
   ai1: false,
   ai2: false,
-  difficulty: "hard",
+  difficulty: "easy",
   pause: false
 };
 

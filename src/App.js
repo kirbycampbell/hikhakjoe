@@ -24,7 +24,7 @@ function App() {
         {state.gameType !== "ask" && (
           <React.Fragment>
             <GamePoints />
-            <Difficulty />
+            {/* <Difficulty /> */}
             <BoxGrid type={state.gameType} resetGame={resetGame} />
             <OverallPoints
               p1Points={state.p1AllPoints}
@@ -33,7 +33,7 @@ function App() {
           </React.Fragment>
         )}
       </div>
-      <div className="footer">Made with Love by Kirby Campbell</div>
+      <div className="footer">Made by Kirby Campbell</div>
     </div>
   );
 }
